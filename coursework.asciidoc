@@ -3,7 +3,7 @@
 == Outline
 This coursework is designed to give you experience building Java EE 7 applications and deploying them to the Cloud. You will build a real-world application using real enterprise technologies. This coursework provides you with an opportunity to work on an entire application, from the data-storage through to the web frontend. As a result you will need to become familiar with a wide range of technologies. It is important that you start the work early and ask for help when needed. By completing this coursework, you will gain some useful experience and skills.
 
-Before attempting this coursework, please complete link:https://github.com/NewcastleComputingScience/enterprise-middleware-coursework/blob/master/tutorial.asciidoc[this tutorial].
+Before attempting this coursework, please complete link:https://github.com/DnsZhou/CSC8109-Group-Project-in-Cloud-Computing/blob/master/tutorial.asciidoc[this tutorial].
 
 In Part One you will build a simple service, hosted on a Platform as a Service Cloud. The service should be accessible through a RESTful JSON api and accompanied by a selection of tests to demonstrate that it satisfies the provided requirements.
 
@@ -25,7 +25,7 @@ This coursework covers a large number of technologies. The challenge here is to 
 * *Bean Validation*. This technology allows you to specify constraints on your data and assists with validation.
 * *Arquillian*. With this tool you will be able to write tests that run inside the application server.
 * *Maven*. Your application will be built and deployed with this tool.
-* *OpenShift*. This is the Platform as a Service (PaaS) that you will use to deploy your application to the Cloud.
+* *Red Hat OpenShift on AWS*. This is the Platform as a Service (PaaS) that you will use to deploy your application to the AWS Cloud.
 * *JAX-RS*. This technology provides the Java EE API for developing REST services. You will use this technology to communicate between distributed components of your application (web-interfaces & other services).
 * *Git*. This is a distributed version control system and will be used to backup your code and for deploying it to OpenShift.
 * *Swagger*. Swagger is a simple yet powerful representation of your RESTful API. Using Java @Annotations Swagger will generate documentation for JAX-RS endpoints as part of the project build process.

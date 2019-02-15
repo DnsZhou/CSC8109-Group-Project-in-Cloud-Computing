@@ -1,0 +1,44 @@
+<!--
+    JBoss, Home of Professional Open Source
+    Copyright 2014, Red Hat, Inc. and/or its affiliates, and individual
+    contributors by the @authors tag. See the copyright.txt in the
+    distribution for a full listing of individual contributors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!-- This is a partial, and is templated by AngularJS -->
+
+<div ng-include="'templates/customer/customerForm.html'"></div>
+
+<hr>
+
+<!-- A list of that customers bookings -->
+<div class="contact-list-heading clearfix">
+    <p class="pull-left">Bookings</p>
+    <a href="#/home" class="btn pull-right" role="button" id="addBooking">
+        <span class="glyphicon glyphicon-plus"></span>
+    </a>
+</div>
+<ul class="contacts">
+    <!-- The list is built using Angular's ng-repeat functionality, iterating over booking objects in bookings -->
+    <li class="contact" ng-repeat="booking in bookings | orderBy: 'bookingDate'">
+        <div class="row">
+            <div class="col-md-10">
+                <p><strong>{{booking.taxi.reg}}</strong> on {{booking.bookingDate}}</p>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-default pull-right" data-ng-click="removeBooking(booking)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </div>
+        </div>
+    </li>
+</ul>

@@ -21,3 +21,30 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+
+*~
+target
+.DS_Store
+.faces-config.xml.faceside
+.faces-config.xml.jsfdia
+MANIFEST.MF
+bin
+.openshift
+.errai
+out
+.idea
+*.ipr
+*.iws
+*.iml
+atlassian-ide-plugin.xml
+.classpath
+.project
+.settings
+.metadata
+bin
+.nbattrs
+*.log
+.clover
+*.swp
+.springBeans

@@ -1,0 +1,200 @@
+= Enterprise Middleware Coursework - Tutorial
+
+This tutorial guides you through the necessary preparation required to begin your Enterprise Middleware coursework.
+It is very important that you have completed this and are comfortable with the example, before beginning the coursework.
+
+== Create Accounts
+
+_This section applies to **all students**_
+
+To complete this coursework you will need accounts with GitHub and OpenShift.
+
+=== GitHub
+GitHub offers the Git version control system as a service.
+You will use it to host your code and to make it available to the demonstrators.
+GitHub is very popular in the open-source community and works best when you make your code available to others to view, clone and contribute towards.
+However, given the confidential nature of your coursework, you will need to use a private repository only accessible by yourself and the demonstrators.
+
+If you do not already have an account you will need to:
+
+1. Go to: https://github.com/
+2. Fill in your details and select "Sign up for GitHub."
+3. Obtain a private repository. The steps to do this should have been provided to you already.
+
+TIP: GitHub is a very popular service, and you are quite likely to use it in your professional career; especially if you work with open source software in some capacity.
+
+=== OpenShift [[openshift]]
+OpenShift is a Platform as a Service (PaaS) Cloud offered by Red Hat.
+It can host many types of applications, but for this coursework you will be using it to host Java EE 7 applications on JBoss EAP.
+
+If you do not already have a Red Hat developers account you will need to:
+
+1. Go to: https://developers.redhat.com/register
+2. Create an account, make a note of the *Red Hat Login ID* that you choose
+3. Send an email to Adam Cattermole (a.cattermole@newcastle.ac.uk) with your *student number* and *Red Hat Login ID*
+
+At this stage you will be waiting for provisioning to continue. Once we have setup a project and provided you with access you will receive an email confirmation. You will then be able to login using your credentials at https://manage.openshift.com/ to perform further setup.
+
+NOTE: Please return to this section once you have completed the steps below, up to and including <<repository_setup>>. You should be able to run the contacts-swagger quickstart locally, and have your code available within your Git repository.
+
+Once you have completed the steps below, you will now be able to proceed to setup a new build of the quickstart on OpenShift, by following the guide link:./openshift_setup.asciidoc[here].
+
+
+== Environment Setup
+
+_This section of the tutorial only applies to students working on *their own* machines, not those provided by the university!_
+
+link:https://youtu.be/X0HlR40DkxI?t=2m48s[Tutorial Video - 2m48s]
+
+This coursework depends upon several software packages / development tools. You must ensure you follow the instructions to install the following:
+
+* link:https://git-scm.com/[Git]
+* link:https://maven.apache.org/[Maven]
+
+== Run Example
+
+Now you will run a simple example.
+This example provides you with a starting point that you will build on when you come to doing the coursework.
+Therefore, it is very important that you get this working and become familiar with the code.
+
+=== Download JBoss EAP 7.0.0
+
+_This section of the tutorial only applies to students working on *their own* machines, not those provided by the university!_
+
+1. Go link:https://developers.redhat.com/products/eap/download/[here].
+2. Download the zip distribution of JBoss EAP 7.0.0. _Note:_ You need to make sure you use this version of JBoss EAP as this matches the version you will be using on OpenShift. You will be required to login with your RedHat Developers account, and provide some additional details as part of the download process.
+3. Unzip JBoss EAP to somewhere on your computer.
+
+=== Obtain the Contacts-Swagger Quickstart [[obtain_quickstart]]
+
+_This section applies to **all students**_
+
+link:https://youtu.be/X0HlR40DkxI?t=4m47s[Tutorial Video - 4m47s]
+
+1. Visit the NewcastleComputingScience/jboss-wfk-quickstarts github repo release page link:https://github.com/NewcastleComputingScience/jboss-wfk-quickstarts/releases/tag/v2.7.0%2BNCL201819-RC1[here].
+2. Click on the *Source code (zip)* link to obtain the contacts-swagger quickstart
+3. Unzip the download to somewhere on your computer. Be aware this may take some time as there are many files and you are likely writing to your (networked) `H` drive.
+4. Open `cmd.exe` and go to the root directory in the contacts quickstart you just unzipped.
+
+NOTE: You must start `cmd` by navigating to *Start -> Programming and Databases -> Command Prompt - development tools (64bit)* as this will configure your `PATH` variables such that all the software necessary for this module (maven, git, java, oc) is available.
+
+=== Run the Quickstart
+
+_This section applies to **all students**_
+
+link:https://youtu.be/X0HlR40DkxI?t=6m04s[Tutorial Video - 6m04s]
+
+Step through the instructions on the Contacts-Swagger quickstart page link:https://github.com/NewcastleComputingScience/jboss-wfk-quickstarts/tree/ncl_fixes_2018_19/[here], up to and including section "Run the Arquillian Tests".
+
+== Working with Git [[repository_setup]]
+
+_This section applies to **all students**_
+
+link:https://youtu.be/X0HlR40DkxI?t=10m01s[Tutorial Video - 10m01s]
+
+You will be using Git in the coursework for regular checkpoint and backup of your code to GitHub.
+You will also use your GitHub repository as the basis to deploy new versions of your application to OpenShift.
+This section will show you how to create a copy of the 'contacts-swagger' example, ready for you to extend in the coursework, and also how to push the code to GitHub and OpenShift.
+
+* Clone your original private repository from GitHub to a location where you would like to perform your work (correct the url to that of your private repository).
+
+    git clone https://github.com/NewcastleComputingScience/csc8104-your-repo.git
+
+* Copy the contents of the contacts-swagger quickstart into your private repository, which you downloaded in step <<obtain_quickstart>>.
+* Now you need to push this code to your git repository on GitHub.
+
+    git add .
+    git commit -m "contacts-swagger added to repository"
+    git push origin master
+
+* You can use a similar method to add new files or changes, commit these changes, and push your commits to the remote repository.
+
+TIP: If you are new to Git, you should read Pro Git. Chapters 1-3 should cover all the functionality required for this coursework.  Available at: http://git-scm.com/book
+
+*Now you have the quickstart code within your private GitHub repository, you can return to the <<openshift>> section to setup your build.*
+
+== Eclipse Setup
+
+_This section applies to **all students**_
+
+link:https://youtu.be/X0HlR40DkxI?t=24m24s[Tutorial Video - 24m24s]
+
+If you are on a University machine and wish to use Eclipse to edit the contacts-swagger example (and your coursework), you should use the version of Eclipse neon provided on your uni machine.
+
+If you are on your own machine we recommend you visit the Eclipse https://www.eclipse.org/downloads/eclipse-packages/[downloads page] and select the "Eclipse IDE for Java EE Developers" which comes with Maven support.
+
+Regardless, once in Eclipse you must add the contacts-swagger example to your workspace using the following steps:
+
+. *Import the maven project into eclipse*.
+  .. Within a new workspace, click 'File' -> 'Import...'
+  .. Select 'Maven' -> 'Existing Maven Projects'
+  .. Click on 'Browse' and select the contacts-swagger quickstart folder.
+  .. Click 'Finish'
+
+TIP: You may use other IDEs or editors if you like, but we will not support their use, so be sure that they are able to import and work with Maven projects.
+
+IMPORTANT: When you first import the project, maven will download all of the project dependencies to an `.m2` repository folder on your `H` drive. This may take a *very* long time.
+
+
+== Viewing your datasource
+
+During development of your application you may find it very useful to be able to inspect the contents of your database. To do this you will use h2console, which is provided as part of the quickstarts.
+
+=== Deploying h2console
+
+_This section of the tutorial only applies to students working on *their own* machines, not those provided by the university!_
+
+Obtain the `h2console.war` file from link:https://github.com/jboss-developer/jboss-eap-quickstarts/tree/7.0.0.Final/h2-console[here], copy it into the "standalone/deployments" directory of your *EAP_HOME* directory. You may also need to restart your local JBoss server.
+
+=== Accessing h2console
+
+_This section applies to **all students**_
+
+You can access the console at http://localhost:8080/h2console.
+
+To log into the datasource for your application, use the following details.
+
+    Driver Class: javax.naming.InitialContext
+    JDBC URL: Your JDBC URL is available in your persistence.xml file, and can be found between the <jta-data-source> tags e.g. java:jboss/datasources/JbossContactsSwaggerQuickstartDS
+    Username: sa
+    Passowrd: sa
+
+. Click "Test Connection" and if these details are correct you will see "Test successful".
+
+. Press "Connect" to view the contents of the datasource.
+
+TIP: Your persistence.xml is the configuration file used to specify the connection details to your database. Your persistence.xml file can be found in src/main/resources/META-INF.
+
+== Testing your API
+
+Besides the Arquillian tests run through maven, you will occasionally want to test your API in a more manual fashion, in order to clearly see what information is being sent and received.
+
+It is partly for this purpose that the Contacts-Swagger quickstart uses the link:http://swagger.io[Swagger] tool to generate API documentation.
+
+Not only does Swagger use link:https://github.com/swagger-api/swagger-core/wiki/Annotations-1.5.X[@Annotations] to automatically generate attractive documentation for API endpoints, but this documentation is interactive.
+This allows you to run each supported HTTP operation from the documentation webpage with sample input and see the response JSON.
+An example of swagger documentation can be found link:http://petstore.swagger.io/[here].
+
+Another common method of manual testing of APIs is sending http requests from the command line, using a tool called link:http://curl.haxx.se/[cURL].
+
+cURL has not been installed as part of the command line tools on the university machines this year, however it is available as part of Git Bash, if you have any issues please ask a member of the teaching staff. Feel free to install and use this from your own machine also.
+
+To give you an example of how you might use cURL to see what your API is doing, once the QuickStart is running (locally) you could execute the following commands (in cmd.exe):
+
+* to see a list of all contacts returned, formatted as JSON and accompanied by all HTTP headers.
+
+    curl -v http://localhost:8080/api/contacts/
+
+* to create a new contact.
+
+    curl -X POST --header "Content-Type: application/json" --header "Accept: application/json" -d "{
+      \"firstName\": \"Alice\",
+      \"lastName\": \"Bob\",
+      \"email\": \"alice@bob.com\",
+      \"phoneNumber\": \"(231) 111-1111\",
+      \"birthDate\": \"1982-10-26\"
+    }" "http://localhost:8080/api/contacts"
+
+The *-v* switch instructs curl to display all possible information, whilst the *-X* switch allows you to specify the HTTP method to be used and *-d* the data to be sent.
+
+TIP: If you would like to learn more about how to use cURL, you can refer to the link:http://curl.haxx.se/docs/manpage.html[official documentation] or link:http://code.tutsplus.com/tutorials/a-beginners-guide-to-http-and-rest--net-16340[this] useful tutorial.

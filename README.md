@@ -1,4 +1,4 @@
-# CSC8109-Group-Project-in-Cloud-Computing
+# Fair Exchange System
 CSC8109 Group Project in Cloud Computing - Group3
 
 ## CSC8109 Group Project Specification

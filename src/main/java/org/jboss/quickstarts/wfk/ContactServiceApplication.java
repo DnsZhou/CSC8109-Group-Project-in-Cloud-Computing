@@ -16,8 +16,9 @@
  */
 package org.jboss.quickstarts.wfk;
 
-
 import io.swagger.jaxrs.config.BeanConfig;
+import uk.ac.ncl.cs.csc8109.fes.client.ClientRestService;
+
 import org.jboss.quickstarts.wfk.contact.ContactRestService;
 import org.jboss.quickstarts.wfk.util.JacksonConfig;
 import org.jboss.quickstarts.wfk.util.RestServiceExceptionHandler;
@@ -30,57 +31,58 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A class extending {@link Application} and annotated with @ApplicationPath is the Java EE 6 "no XML" approach to activating
- * JAX-RS.
+ * A class extending {@link Application} and annotated with @ApplicationPath is
+ * the Java EE 6 "no XML" approach to activating JAX-RS.
  *
  * <p>
- * Resources are served relative to the servlet path specified in the {@link ApplicationPath} annotation.
+ * Resources are served relative to the servlet path specified in the
+ * {@link ApplicationPath} annotation.
  * </p>
  */
 @ApplicationPath("/api")
 public class ContactServiceApplication extends Application {
 
+	public ContactServiceApplication() {
+		BeanConfig beanConfig = new BeanConfig();
+		beanConfig.setVersion("0.0.1");
+		beanConfig.setSchemes(new String[] { "http" });
+		// We may no longer need to change this
+		// beanConfig.setHost("localhost:8080/jboss-contacts-swagger");
+		beanConfig.setBasePath("/api");
+		beanConfig.setTitle("Fair Exchange System (FES)");
+		beanConfig.setDescription("group project for CSC8109 Cloud Computing");
+		// Add additional RESTService containing packages here, separated by commas:
+		// "org.jboss.quickstarts.wfk.contact," +
+		// "org.jboss.quickstarts.wfk.other"
+//		beanConfig.setResourcePackage("org.jboss.quickstarts.wfk.contact");
+		beanConfig.setResourcePackage("uk.ac.ncl.cs.csc8109.fes");
+		beanConfig.setScan(true);
 
-    public ContactServiceApplication() {
-        BeanConfig beanConfig = new BeanConfig();
-        beanConfig.setVersion("0.0.1");
-        beanConfig.setSchemes(new String[]{"http"});
-        // We may no longer need to change this
-        // beanConfig.setHost("localhost:8080/jboss-contacts-swagger");
-        beanConfig.setBasePath("/api");
-        beanConfig.setTitle("Fair Exchange System");
-        beanConfig.setDescription("group project for CSC8109 Cloud Computing");
-        //Add additional RESTService containing packages here, separated by commas:
-        // "org.jboss.quickstarts.wfk.contact," +
-        // "org.jboss.quickstarts.wfk.other"
-        beanConfig.setResourcePackage("org.jboss.quickstarts.wfk.contact");
-        beanConfig.setScan(true);
+		// Do not edit below
+		RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
+	}
 
-        //Do not edit below
-        RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
-    }
+	@Override
+	public Set<Class<?>> getClasses() {
+		Set<Class<?>> services = new HashSet<>();
 
-    @Override
-    public Set<Class<?>> getClasses() {
-        Set<Class<?>> services = new HashSet<>();
+		// Add RESTful resources here as you create them
+//		services.add(ContactRestService.class);
+//		services.add(ClientRestService.class);
 
-        //Add RESTful resources here as you create them
-        services.add(ContactRestService.class);
+		// Do not edit below
+		services.add(RestServiceExceptionHandler.class);
+		services.add(io.swagger.jaxrs.listing.ApiListingResource.class);
+		services.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
 
-        //Do not edit below
-        services.add(RestServiceExceptionHandler.class);
-        services.add(io.swagger.jaxrs.listing.ApiListingResource.class);
-        services.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
+		return services;
+	}
 
-        return services;
-    }
-
-    @Override
-    public Set<Object> getSingletons() {
-        Set<Object> singletons = new HashSet<>();
-        singletons.add(new JacksonConfig());
-        return singletons;
-    }
-
+	@Override
+	public Set<Object> getSingletons() {
+		Set<Object> singletons = new HashSet<>();
+		singletons.add(new JacksonConfig());
+		return singletons;
+	}
 
 }

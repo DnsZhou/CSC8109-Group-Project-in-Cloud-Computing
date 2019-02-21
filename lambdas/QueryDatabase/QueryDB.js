@@ -3,13 +3,13 @@ const docClient = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'});
 
 exports.handler = (event, context, callback) => {
     let parsed_json = JSON.parse(event.body)
-    let search_term = parsed_json.search_term
+    let email = parsed_json.email
     let table_name  = “SomeTableName” 
     let params = {
         TableName: table_name,
     
     Key: {
-        "movie_name" : movie_name
+        "email" : email
     }
 }
 

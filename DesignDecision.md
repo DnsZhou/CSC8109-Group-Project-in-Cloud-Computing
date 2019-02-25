@@ -38,11 +38,7 @@
 - String - Full Name
 - Public Key – Temporary – USE AWS KMS IF WE HAVE TIME
 - Private Key – Temporary – USE AWS KMS IF WE HAVE TIME
-- Transactions
-	- Received OR Sent
-		- EOR
-		- EOO
-	- ABORTED OR RESOLVED
+- Transactions - List of Transaction ids related to this user
 
 
 
@@ -50,7 +46,7 @@
 - Primary Key – Transaction ID
 - String - Sender 
 - String – Reciever
-- Status – Aborted / Resolved
+- Status – OnGoing / Aborted / Resolved
 - State – Integer
 - EOO - String
 - EOR - String

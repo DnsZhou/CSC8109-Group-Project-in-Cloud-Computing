@@ -47,9 +47,9 @@
 
 
 ## Transactions - (To keep track of the state of the message)
-- Primary Key – Message ID
+- Primary Key – Transaction ID
 - String - Sender 
--String – Reciever
+- String – Reciever
 - Status – Aborted / Resolved
 - State – Integer
 - EOO - String

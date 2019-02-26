@@ -23,22 +23,7 @@ exports.handler = (event, context, callback) => {
                 callback(err, "Oh No");
                 
                 }
-                else {
-                        // let message = "Hello"
-                        // let private_key = datas.Body.toString();
-                        // const signer = crypto.createSign('sha256');
-                        // signer.update(message);
-                        // signer.end();
-
-                        // const signature = signer.sign(private_key);
-                        // const signature_hex = signature.toString('hex');
-    
-                        // const verifier = crypto.createVerify('sha256');
-                        // verifier.update(message);
-                        // verifier.end();
-
-                        // const verified = verifier.verify(public_key, signature);
-                        // callback(null, "True")
+                else {                    
                         
                 s3.getObject(paramsDocument, function(err, dataDocument) {
                     if(err) {
@@ -66,8 +51,7 @@ exports.handler = (event, context, callback) => {
                 
              }
          });
-            
-                      // successful response
+                                  
         }
     });
 }

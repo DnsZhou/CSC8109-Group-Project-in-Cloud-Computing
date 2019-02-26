@@ -45,7 +45,21 @@ exports.handler = (event, context, callback) => {
                         verifier.end();
 
                         const verified = verifier.verify(public_key, signature);
-                        callback(null, verified)
+                        let paramsPrivate = {
+                        "Body": signature,                        
+                        "Bucket": 'private-keys-cc',
+                        "Key": 'signature'  
+                        };
+
+                        s3.upload(paramsPrivate, function(err, datas){                            
+                            if(err) {
+                                callback(err, "Oh No");
+                            } 
+                            else {
+                                callback(null, data);
+                            }
+                        });
+
                     }
                 })
                 

@@ -1,3 +1,4 @@
+//Todo: add validation to prevent duplicate email address
 const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient({ region: 'eu-west-2' });
 
@@ -17,65 +18,68 @@ exports.handler = (event, context, callback) => {
         TableName: "FesUser"
     }
 
-    var p = new Promise(function (resolve, reject) {
-        let queryParams = {
-            TableName: "FesUser",
-            FilterExpression: 'email = :email',
-            ExpressionAttributeValues: { ":email": params.Item.email }
-        }
-        docClient.scan(queryParams, function (err, data) {
-            console.log("in select length" + data.Items.length)
-            if (err) {
-                console.log("in error")
-                emailDuplicateFlag = true;
-            } else if (data.Items.length == 0) {
-                console.log("in ok")
-                emailDuplicateFlag = false;
-            } else {
-                console.log("in duplicate")
-                emailDuplicateFlag = true;
+    if (!validateEmailNotNull(params.Item.email)) {
+        console.log("in null valid failed")
+        const response = {
+            statusCode: 400,
+            body: JSON.stringify('Bad Request: Wrong format of Email'),
+        };
+        callback(null, response);
+    }
+    else {
+
+        var p = new Promise(function (resolve, reject) {
+            let queryParams = {
+                TableName: "FesUser",
+                FilterExpression: 'email = :email',
+                ExpressionAttributeValues: { ":email": params.Item.email }
             }
-            resolve();
-        });
-    })
-
-    p.then(function () {
-        if (!validateEmailNotNull(params.Item.email)) {
-            console.log("in null valid failed")
-            const response = {
-                statusCode: 400,
-                body: JSON.stringify('Bad Request: Wrong format of Email'),
-            };
-            callback(null, response);
-        }
-        else if (emailDuplicateFlag) {
-            console.log("in dup valid failed")
-            const response = {
-                statusCode: 409,
-                body: JSON.stringify('Bad Request: Email conflict with exist user'),
-            };
-            callback(null, response);
-        } else {
-            console.log("in succeed")
-            docClient.put(params, (err, data) => {
+            docClient.scan(queryParams, function (err, data) {
+                console.log("in select length" + data.Items.length)
                 if (err) {
-                    const response = {
-                        statusCode: 500,
-                        body: JSON.stringify('Error while writing to DB'),
-                    };
-                    callback(err, response);
+                    console.log("in error")
+                    emailDuplicateFlag = true;
+                } else if (data.Items.length == 0) {
+                    console.log("in ok")
+                    emailDuplicateFlag = false;
+                } else {
+                    console.log("in duplicate")
+                    emailDuplicateFlag = true;
                 }
-                else {
-                    const response = {
-                        statusCode: 200,
-                        body: JSON.stringify(params),
-                    };
-                    callback(null, response);
-                }
-            })
-        }
+                resolve();
+            });
+        })
 
-    })
+        p.then(function () {
+            if (emailDuplicateFlag) {
+                console.log("in dup valid failed")
+                const response = {
+                    statusCode: 409,
+                    body: JSON.stringify('Bad Request: Email conflict with exist user'),
+                };
+                callback(null, response);
+            } else {
+                console.log("in succeed")
+                docClient.put(params, (err, data) => {
+                    if (err) {
+                        const response = {
+                            statusCode: 500,
+                            body: JSON.stringify('Error while writing to DB'),
+                        };
+                        callback(err, response);
+                    }
+                    else {
+                        const response = {
+                            statusCode: 200,
+                            body: JSON.stringify(params),
+                        };
+                        callback(null, response);
+                    }
+                })
+            }
+
+        })
+    }
 
 };
 

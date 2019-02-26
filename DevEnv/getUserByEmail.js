@@ -1,14 +1,13 @@
-//Unfinished
 const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient({ region: 'eu-west-2' });
 
 exports.handler = (event, context, callback) => {
-  
-    console.log("currentEmail: ", event.email)
+    const thisEmail = event.queryStringParameters.email
+    console.log("currentEmail: ", thisEmail)
     let params = {
         TableName: "FesUser",
         FilterExpression:'email = :email',
-        ExpressionAttributeValues:{ ":email" : event.email }
+        ExpressionAttributeValues:{ ":email" : thisEmail }
     }
 
     docClient.scan(params, function (err, data) {
@@ -21,7 +20,7 @@ exports.handler = (event, context, callback) => {
         } else if(data.Items.length==0){
             const response = {
                 statusCode: 404,
-                body: JSON.stringify('User with email ' + event.email +' not found in system' ),
+                body: JSON.stringify('User with email ' + thisEmail +' not found in system' ),
             };
             callback(err, response);
         } else {

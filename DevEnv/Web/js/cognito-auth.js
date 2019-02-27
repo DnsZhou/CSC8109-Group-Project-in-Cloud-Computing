@@ -43,7 +43,6 @@ var WildRydes = window.WildRydes || {};
                     resolve(null);
                 } else {
                     const jwtToken = session.getIdToken().getJwtToken()
-                    document.cookie = "jwtToken="+jwtToken+";";
                     console.log(session.getIdToken().getJwtToken())
                     resolve(jwtToken);
                 }

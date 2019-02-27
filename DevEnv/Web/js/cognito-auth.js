@@ -1,9 +1,9 @@
 /*global WildRydes _config AmazonCognitoIdentity AWSCognito*/
 
 var WildRydes = window.WildRydes || {};
-var apigClient = apigClientFactory.newClient({
-    apiKey: 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
-  });
+// var apigClient = apigClientFactory.newClient({
+//     apiKey: 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+//   });
 
 (function scopeWrapper($) {
     var signinUrl = './login.html';

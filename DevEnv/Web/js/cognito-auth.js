@@ -1,9 +1,9 @@
 /*global WildRydes _config AmazonCognitoIdentity AWSCognito*/
 
 var WildRydes = window.WildRydes || {};
-// var apigClient = apigClientFactory.newClient({
-//     apiKey: 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
-//   });
+var apigClient = apigClientFactory.newClient({
+    apiKey: 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+});
 
 (function scopeWrapper($) {
     var signinUrl = './login.html';
@@ -16,8 +16,8 @@ var WildRydes = window.WildRydes || {};
     var userPool;
 
     if (!(_config.cognito.userPoolId &&
-          _config.cognito.userPoolClientId &&
-          _config.cognito.region)) {
+        _config.cognito.userPoolClientId &&
+        _config.cognito.region)) {
         $('#noCognitoMessage').show();
         return;
     }
@@ -69,7 +69,7 @@ var WildRydes = window.WildRydes || {};
         var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
         var attributeName = new AmazonCognitoIdentity.CognitoUserAttribute(dataName);
 
-        userPool.signUp(email, password, [attributeEmail,attributeName], null,
+        userPool.signUp(email, password, [attributeEmail, attributeName], null,
             function signUpCallback(err, result) {
                 if (!err) {
                     onSuccess(result);
@@ -129,10 +129,11 @@ var WildRydes = window.WildRydes || {};
             function signinSuccess() {
                 console.log('Successfully Logged In');
                 // window.location.href = 'index.html';
+                requestLambdaLogin();
                 window.location.href = '#';
             },
             function signinError(err) {
-                alert("Failed to Login: "+err.message);
+                alert("Failed to Login: " + err.message);
             }
         );
     }
@@ -175,8 +176,40 @@ var WildRydes = window.WildRydes || {};
                 window.location.href = signinUrl;
             },
             function verifyError(err) {
-                alert("Failed to Verfy: "+err.message);
+                alert("Failed to Verfy: " + err.message);
             }
         );
+    }
+
+    function requestLambdaLogin() {
+        var params = {
+            // This is where any modeled request parameters should be added.
+            // The key is the parameter name, as it is defined in the API in API Gateway.
+            // param0: '',
+            // param1: ''
+        };
+
+        var body = {
+            // This is where you define the body of the request,
+        };
+
+        var additionalParams = {
+            // If there are any unmodeled query parameters or headers that must be
+            //   sent with the request, add them here.
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true
+            },
+            queryParams: {
+
+            }
+        };
+
+        apigClient.userLoginPost(params, body, additionalParams)
+            .then(function (result) {
+                // Add success callback code here.
+            }).catch(function (result) {
+                // Add error callback code here.
+            });
     }
 }(jQuery));

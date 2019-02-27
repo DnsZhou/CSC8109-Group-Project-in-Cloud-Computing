@@ -42,7 +42,10 @@ var WildRydes = window.WildRydes || {};
                 } else if (!session.isValid()) {
                     resolve(null);
                 } else {
-                    resolve(session.getIdToken().getJwtToken());
+                    const jwtToken = session.getIdToken().getJwtToken()
+                    document.cookie = "jwtToken="+jwtToken+";";
+                    console.log(session.getIdToken().getJwtToken())
+                    resolve(jwtToken);
                 }
             });
         } else {
@@ -122,10 +125,12 @@ var WildRydes = window.WildRydes || {};
         var email = $('#emailInputSignin').val();
         var password = $('#passwordInputSignin').val();
         event.preventDefault();
+        localStorage.clear();
         signin(email, password,
             function signinSuccess() {
                 console.log('Successfully Logged In');
-                window.location.href = 'index.html';
+                // window.location.href = 'index.html';
+                window.location.href = '#';
             },
             function signinError(err) {
                 alert("Failed to Login: "+err.message);

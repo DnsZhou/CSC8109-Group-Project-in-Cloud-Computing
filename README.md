@@ -13,5 +13,5 @@ The original specification provided by school
 ### 2.Design Decision ([DesignDecision.md](https://github.com/DnsZhou/CSC8109-Group-Project-in-Cloud-Computing/blob/master/DesignDecision.md))
 The structure we decided to use in our project
 
-### 3.Backend API function List ([DesignDecision.md](https://github.com/DnsZhou/CSC8109-Group-Project-in-Cloud-Computing/blob/master/DesignDecision.md))
+### 3.Backend API function List ([ApiFunctionList.md](https://github.com/DnsZhou/CSC8109-Group-Project-in-Cloud-Computing/blob/master/ApiFunctionList.md))
 The specific API we planed to develop in our system

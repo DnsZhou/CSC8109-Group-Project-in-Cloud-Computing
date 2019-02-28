@@ -11,8 +11,7 @@
 - #### return:
     - the location url of the document
 
-## 2.generateKey
-this function will work for both EOO and EOR
+## 2.generateEooSignature
 - #### input: 
     - jwt(localStorage)
     - the location url of the document
@@ -23,8 +22,20 @@ this function will work for both EOO and EOR
     - generate the signature of the document with private key
 - #### return:
     - the signature of the document
+    
+## 3.generateEorSignature
+- #### input: 
+    - jwt(localStorage)
+    - EOO
+- #### process:
+    - get sub from jwt
+    - get the private key from the s3 folder(at the same folder named with sub)
+    
+    - generate the EOR signature of the EOO with private key
+- #### return:
+    - the signature of the EOO (AKA EOR)
 
-## 3.creatTransaction
+## 4.creatTransaction
 - #### input: 
     - jwt(localStorage)
     - the location url of the document
@@ -53,7 +64,7 @@ this function will work for both EOO and EOR
 - #### return:
     - whether transaction successfully created or not
 
-## 4.confirmTransaction
+## 5.confirmTransaction
 - #### input: 
     - jwt(localStorage)
     - transactionId
@@ -73,7 +84,7 @@ this function will work for both EOO and EOR
 - #### return:
     - whether transaction confirmed successfully or not
 
-## 5.getAllUsers
+## 6.getAllUsers
 - #### input: 
     - jwt(localStorage)
 - #### process:
@@ -82,7 +93,7 @@ this function will work for both EOO and EOR
 - #### return:
     - list of users.
 
-## 6.getMyInboundTransactionList
+## 7.getMyInboundTransactionList
 - #### input: 
     - jwt(localStorage)
 - #### process:
@@ -99,7 +110,7 @@ this function will work for both EOO and EOR
 - #### return:
     - list of **transactions**
 
-## 7.getMyUnreadInboundTransactionList
+## 8.getMyUnreadInboundTransactionList
 This function aimed to provide a message for user to find all unfinished process and show as messages in homepage.
 - #### input: 
     - jwt(localStorage)
@@ -117,7 +128,7 @@ This function aimed to provide a message for user to find all unfinished process
 - #### return:
     - list of **transactions**
 
-## 8.getMyOutboundTransactionList
+## 9.getMyOutboundTransactionList
 - #### input: 
     - jwt(localStorage)
 - #### process:
@@ -133,7 +144,7 @@ This function aimed to provide a message for user to find all unfinished process
 - #### return:
     - list of **transactions**
 
-## 9.getTransactionDetails
+## 10.getTransactionDetails
 - #### input: 
     - jwt(localStorage)
     - transactionId
@@ -162,7 +173,7 @@ This function aimed to provide a message for user to find all unfinished process
 - #### return:
     - json object *transaction* or error message
 
-## 9.register
+## 11.register
 this function will be executed automatically after the user registered
 - #### input: 
     - jwt(from cognito)

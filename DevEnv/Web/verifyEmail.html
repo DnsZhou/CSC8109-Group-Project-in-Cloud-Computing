@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Verify Email - Fair Exchange System</title>
+
+    <!-- Custom styles for this template -->
+    <link href="./css/signin.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+    <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div id="noCognitoMessage" class="configMessage" style="display: none;">
+        <div class="backdrop"></div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">No Cognito User Pool Configured</h3>
+            </div>
+            <div class="panel-body">
+                <p>There is no user pool configured in <a href="/js/config.js">/js/config.js</a>. Pleas Check it.</p>
+            </div>
+        </div>
+    </div>
+    <form class="form-signin" id="verifyForm">
+        <img class="mb-3 login-logo" src="./css/FESLogo.png" alt="">
+        <h1 class="h3 mb-3 font-weight-normal">Verify Email address</h1>
+        <input type="email" class="mb-3 form-control" id="emailInputVerify" placeholder="Email address" pattern=".*"
+            required autofocus>
+        <input type="text" class="mb-3 form-control" id="codeInputVerify" placeholder="Verification Code" pattern=".*" required>
+        <!-- <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div> -->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Verify</button>
+        <p>
+            Already have an account? Please <a href="./login.html">Sign in </a>
+        </p>
+        <br />
+        <p class="mb-1">&copy; 2019 Newcastle University</p>
+    </form>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap Notify -->
+    <script src="http://bootstrap-notify.remabledesigns.com/js/bootstrap-notify.min.js"></script>
+
+    <!-- AWS Cognito Library -->
+    <script src="./js/vendor/aws-cognito-sdk.min.js"></script>
+    <script src="./js/vendor/amazon-cognito-identity.min.js"></script>
+
+    <!-- Customized JS -->
+    <script src="./js/config.js"></script>
+    <script src="./js/cognito-auth.js"></script>
+</body>
+
+</html>

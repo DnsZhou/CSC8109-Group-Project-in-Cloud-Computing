@@ -20,7 +20,7 @@
 - Single use stateless functions
 - Accessed via RESTful service
 - RESTful service provided by API Gateway
-- IF WE HAVE TIME Associate JWT login token as access key for accessing RESTful service.
+- Use Cognito to manage user pool and use JWT proviced by Cognito to authorize every request through the lambda function
 
 
 ## Individual Lambda Functions
@@ -34,23 +34,27 @@
 ## DynamoDB
 - we use DynamoDB to store all the user information and store all transactions in this system.
 ### Users Table
-- Primary Key – Email
-- String - Full Name
-- Public Key – Temporary – USE AWS KMS IF WE HAVE TIME
-- Private Key – Temporary – USE AWS KMS IF WE HAVE TIME
-- Transactions - List of Transaction ids related to this user
+- email - Primary Key, String
+- fullName - String
+- ?publicKey – String
+- ?privateKey – String
+- inboundTransactions - String - List of Inbound Transaction uuids related to this user
+- iutboundTransactions - String - List of Outbound Transaction uuids related to this user
 
 
 
 ## Transactions - (To keep track of the state of the message)
-- Primary Key – Transaction ID
-- String - Sender 
-- String – Reciever
-- Status – OnGoing / Aborted / Resolved
-- State – Integer
-- EOO - String
-- EOR - String
-- S3 URI: String
+- transactionId - Primary Key, String
+- sender - String
+- reciever - String
+- status – OnGoing / Aborted / Resolved
+- state – Integer
+- eoo - String
+- eor - String
+- documentUri - String
+- createTime - Datetime
+- updateTime - Datetime
+- remark - String
 *Possibly use a mixture of JSON and Dynamo To keep track of state and accessing fair exchange variables*
 
 

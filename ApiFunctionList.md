@@ -19,7 +19,7 @@
     - get sub from jwt
         - **if url of file does not match the sub in jwt**, reject the request
     - get the private key from the s3 folder(at the same folder named with sub)
-    - generate the signature of the document with private key
+    - generate the signature of the document with private key, encode it with base64.
 - #### return:
     - the signature of the document
     
@@ -30,8 +30,7 @@
 - #### process:
     - get sub from jwt
     - get the private key from the s3 folder(at the same folder named with sub)
-    
-    - generate the EOR signature of the EOO with private key
+    - generate the EOR signature of the EOO with private key, encode it with base64.
 - #### return:
     - the signature of the EOO (AKA EOR)
 
@@ -39,9 +38,10 @@
 - #### input: 
     - jwt(localStorage)
     - the location url of the document
-    - the signature of the document(EOO)
+    - the signature of the document(EOO) 
     - reciver's email
 - #### process:
+    - decode the EOO with base64
     - get sub from *jwt*
     - get sender's *email* from *jwt*
     - validate whether the *EOO* match with the document, 
@@ -68,8 +68,9 @@
 - #### input: 
     - jwt(localStorage)
     - transactionId
-    - EOR Signature
+    - the signature of EOO (AKA EOR)
 - #### process:
+    - decode the EOR with base64
     - get *sub* from *jwt*
     - get *Transaction* from DynamalDB by the *transactionId* that passed in
     - validate whether the *email* of the current user in jwt match with the reciver's email in the transaction

@@ -39,6 +39,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="logOut()">LogOut</a>
+                </li>
             </ul>
             <ul class="form-inline my-2 my-lg-0 navbar-text">
                 CSC8109 Group Project -- Team 3
@@ -175,8 +178,14 @@
     <!-- Bootstrap Notify -->
     <script src="http://bootstrap-notify.remabledesigns.com/js/bootstrap-notify.min.js"></script>
 
+    <!-- AWS Cognito Library -->
+    <script src="./js/vendor/aws-cognito-sdk.min.js"></script>
+    <script src="./js/vendor/amazon-cognito-identity.min.js"></script>
+
     <!-- Customized JS -->
+    <script src="./js/config.js"></script>
     <script src="./js/notifyTest.js"></script>
+    <script src="./js/loginVerification.js"></script>
 </body>
 
 </html>

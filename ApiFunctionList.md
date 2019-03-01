@@ -21,12 +21,12 @@
     - get the private key from the s3 folder(at the same folder named with sub)
     - generate the signature of the document with private key, encode it with base64.
 - #### return:
-    - the signature of the document
+    - the signature of the document in BASE64 format
     
 ## 3.generateEorSignature
 - #### input: 
     - jwt(localStorage)
-    - EOO
+    - TransactionId
 - #### process:
     - get sub from jwt
     - get the private key from the s3 folder(at the same folder named with sub)
@@ -180,14 +180,13 @@ this function will be executed automatically after the user registered
     - jwt(from cognito)
 - #### process:
     - get *email*, *fullName* from *jwt*
-    - generate a new private key and save it to the folder named with the *sub* in *jwt*.
-    - use the *email* to find the OutboundTransactions (a list of uuids) of this user
-    - get list of **transactions** from the InboundTransactions, construct in following format:
-        - transactionId
-        - sender
-        - reciver
-        - status
-        - state
+    - generate a new *private key* and *public key* and save it to the folder named with the *sub* in *jwt*.
+    - create a new user in DB with following information:
+        - email - String
+        - sub - String, the uuid provided by Cognito to identify a single user
+        - fullName - String
+        - inboundTransactions - String - List of Inbound Transaction uuids related to this user
+        - outboundTransactions - List<String> - List of Outbound Transaction uuids related to this user
     - query the database and get list of all users in {email: "email", fullName: "fullName"} format
 - #### return:
     - list of **transactions**

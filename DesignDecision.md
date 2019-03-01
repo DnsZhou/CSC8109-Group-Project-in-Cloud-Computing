@@ -50,8 +50,8 @@
 - reciever - String
 - status – OnGoing / Aborted / Resolved
 - ~~state – Integer~~
-- eoo - String
-- eor - String
+- ~~eoo - String~~
+- ~~eor - String~~
 - documentUri - String
 - createTime - Datetime
 - updateTime - Datetime

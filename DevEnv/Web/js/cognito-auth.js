@@ -1,6 +1,7 @@
 /*global WildRydes _config AmazonCognitoIdentity AWSCognito*/
 
 var WildRydes = window.WildRydes || {};
+var jwtToken = null;
 var apigClient = apigClientFactory.newClient({
     apiKey: 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
 });
@@ -42,8 +43,7 @@ var apigClient = apigClientFactory.newClient({
                 } else if (!session.isValid()) {
                     resolve(null);
                 } else {
-                    const jwtToken = session.getIdToken().getJwtToken()
-                    console.log(session.getIdToken().getJwtToken())
+                    jwtToken = session.getIdToken().getJwtToken()
                     resolve(jwtToken);
                 }
             });
@@ -130,7 +130,7 @@ var apigClient = apigClientFactory.newClient({
                 console.log('Successfully Logged In');
                 // window.location.href = 'index.html';
                 requestLambdaLogin();
-                window.location.href = '#';
+                window.location.href = 'index.html';
             },
             function signinError(err) {
                 alert("Failed to Login: " + err.message);
@@ -185,20 +185,20 @@ var apigClient = apigClientFactory.newClient({
         var params = {
             // This is where any modeled request parameters should be added.
             // The key is the parameter name, as it is defined in the API in API Gateway.
-            // param0: '',
             // param1: ''
         };
 
         var body = {
-            // This is where you define the body of the request,
+            jwtToken: jwtToken
         };
 
         var additionalParams = {
             // If there are any unmodeled query parameters or headers that must be
             //   sent with the request, add them here.
             headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true
+                // "my_header": "my_value",
+                // "Access-Control-Allow-Origin" : "GET", // Required for CORS support to work
+                // "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
             },
             queryParams: {
 

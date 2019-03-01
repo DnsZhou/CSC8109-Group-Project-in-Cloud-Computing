@@ -11,8 +11,7 @@
 - #### return:
     - the location url of the document
 
-## 2.generateKey
-this function will work for both EOO and EOR
+## 2.generateEooSignature
 - #### input: 
     - jwt(localStorage)
     - the location url of the document
@@ -20,17 +19,29 @@ this function will work for both EOO and EOR
     - get sub from jwt
         - **if url of file does not match the sub in jwt**, reject the request
     - get the private key from the s3 folder(at the same folder named with sub)
-    - generate the signature of the document with private key
+    - generate the signature of the document with private key, encode it with base64.
 - #### return:
     - the signature of the document
+    
+## 3.generateEorSignature
+- #### input: 
+    - jwt(localStorage)
+    - EOO
+- #### process:
+    - get sub from jwt
+    - get the private key from the s3 folder(at the same folder named with sub)
+    - generate the EOR signature of the EOO with private key, encode it with base64.
+- #### return:
+    - the signature of the EOO (AKA EOR)
 
-## 3.creatTransaction
+## 4.creatTransaction
 - #### input: 
     - jwt(localStorage)
     - the location url of the document
-    - the signature of the document(EOO)
-    - reciver's email
+    - the signature of the document(EOO) 
+    - reciever's email
 - #### process:
+    - decode the EOO with base64
     - get sub from *jwt*
     - get sender's *email* from *jwt*
     - validate whether the *EOO* match with the document, 
@@ -39,7 +50,7 @@ this function will work for both EOO and EOR
     - create a transaction in DynamalDB, with following information:
         - transactionId: generated UUID 
         - sender: email of the sender(from jwt)
-        - reciver: email of the reciver
+        - reciever: email of the reciever
         - status: OnGoing if EOO match, Aborted if EOO not match
         - state: 2
         - eoo: EOO that passed in
@@ -49,19 +60,20 @@ this function will work for both EOO and EOR
         - createTime - use current time
     - if transaction created: 
         - Update the user table with sender *email*, add the transaction to *outboundTransactions* list.
-        - Update the user table with reciver *email*, add the transaction to *inboundTransactions* list.
+        - Update the user table with reciever *email*, add the transaction to *inboundTransactions* list.
 - #### return:
     - whether transaction successfully created or not
 
-## 4.confirmTransaction
+## 5.confirmTransaction
 - #### input: 
     - jwt(localStorage)
     - transactionId
-    - EOR Signature
+    - the signature of EOO (AKA EOR)
 - #### process:
+    - decode the EOR with base64
     - get *sub* from *jwt*
     - get *Transaction* from DynamalDB by the *transactionId* that passed in
-    - validate whether the *email* of the current user in jwt match with the reciver's email in the transaction
+    - validate whether the *email* of the current user in jwt match with the reciever's email in the transaction
     - validate whether the *EOR* match with the *EOO* from the Transaction in DB, 
         - **if not**, mark the transaction as **aborted**, add message to remark field: *EOR* not match with *EOO*
     - generate the signature of the document
@@ -73,7 +85,7 @@ this function will work for both EOO and EOR
 - #### return:
     - whether transaction confirmed successfully or not
 
-## 5.getAllUsers
+## 6.getAllUsers
 - #### input: 
     - jwt(localStorage)
 - #### process:
@@ -82,7 +94,7 @@ this function will work for both EOO and EOR
 - #### return:
     - list of users.
 
-## 6.getMyInboundTransactionList
+## 7.getMyInboundTransactionList
 - #### input: 
     - jwt(localStorage)
 - #### process:
@@ -99,7 +111,7 @@ this function will work for both EOO and EOR
 - #### return:
     - list of **transactions**
 
-## 7.getMyUnreadInboundTransactionList
+## 8.getMyUnreadInboundTransactionList
 This function aimed to provide a message for user to find all unfinished process and show as messages in homepage.
 - #### input: 
     - jwt(localStorage)
@@ -117,7 +129,7 @@ This function aimed to provide a message for user to find all unfinished process
 - #### return:
     - list of **transactions**
 
-## 8.getMyOutboundTransactionList
+## 9.getMyOutboundTransactionList
 - #### input: 
     - jwt(localStorage)
 - #### process:
@@ -133,7 +145,7 @@ This function aimed to provide a message for user to find all unfinished process
 - #### return:
     - list of **transactions**
 
-## 9.getTransactionDetails
+## 10.getTransactionDetails
 - #### input: 
     - jwt(localStorage)
     - transactionId
@@ -162,7 +174,7 @@ This function aimed to provide a message for user to find all unfinished process
 - #### return:
     - json object *transaction* or error message
 
-## 9.register
+## 11.register
 this function will be executed automatically after the user registered
 - #### input: 
     - jwt(from cognito)

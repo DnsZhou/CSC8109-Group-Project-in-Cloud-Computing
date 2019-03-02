@@ -189,8 +189,6 @@ this function will be executed automatically after the user registered
         - email - String
         - sub - String, the uuid provided by Cognito to identify a single user
         - fullName - String
-        - inboundTransactions - String - List of Inbound Transaction uuids related to this user
-        - outboundTransactions - List<String> - List of Outbound Transaction uuids related to this user
     - query the database and get list of all users in {email: "email", fullName: "fullName"} format
 - #### return:
     - list of **transactions**

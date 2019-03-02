@@ -21,12 +21,12 @@
     - get the private key from the s3 folder(at the same folder named with sub)
     - generate the signature of the document with private key, encode it with base64.
 - #### return:
-    - the signature of the document
+    - the signature of the document in BASE64 format
     
 ## 3.generateEorSignature
 - #### input: 
     - jwt(localStorage)
-    - EOO
+    - TransactionId
 - #### process:
     - get sub from jwt
     - get the private key from the s3 folder(at the same folder named with sub)
@@ -39,7 +39,7 @@
     - jwt(localStorage)
     - the location url of the document
     - the signature of the document(EOO) 
-    - reciver's email
+    - reciever's email
 - #### process:
     - decode the EOO with base64
     - get sub from *jwt*
@@ -50,7 +50,7 @@
     - create a transaction in DynamalDB, with following information:
         - transactionId: generated UUID 
         - sender: email of the sender(from jwt)
-        - reciver: email of the reciver
+        - reciever: email of the reciever
         - status: OnGoing if EOO match, Aborted if EOO not match
         - state: 2
         - eoo: EOO that passed in
@@ -60,7 +60,7 @@
         - createTime - use current time
     - if transaction created: 
         - Update the user table with sender *email*, add the transaction to *outboundTransactions* list.
-        - Update the user table with reciver *email*, add the transaction to *inboundTransactions* list.
+        - Update the user table with reciever *email*, add the transaction to *inboundTransactions* list.
 - #### return:
     - whether transaction successfully created or not
 
@@ -73,7 +73,7 @@
     - decode the EOR with base64
     - get *sub* from *jwt*
     - get *Transaction* from DynamalDB by the *transactionId* that passed in
-    - validate whether the *email* of the current user in jwt match with the reciver's email in the transaction
+    - validate whether the *email* of the current user in jwt match with the reciever's email in the transaction
     - validate whether the *EOR* match with the *EOO* from the Transaction in DB, 
         - **if not**, mark the transaction as **aborted**, add message to remark field: *EOR* not match with *EOO*
     - generate the signature of the document
@@ -180,14 +180,13 @@ this function will be executed automatically after the user registered
     - jwt(from cognito)
 - #### process:
     - get *email*, *fullName* from *jwt*
-    - generate a new private key and save it to the folder named with the *sub* in *jwt*.
-    - use the *email* to find the OutboundTransactions (a list of uuids) of this user
-    - get list of **transactions** from the InboundTransactions, construct in following format:
-        - transactionId
-        - sender
-        - reciver
-        - status
-        - state
+    - generate a new *private key* and *public key* and save it to the folder named with the *sub* in *jwt*.
+    - create a new user in DB with following information:
+        - email - String
+        - sub - String, the uuid provided by Cognito to identify a single user
+        - fullName - String
+        - inboundTransactions - String - List of Inbound Transaction uuids related to this user
+        - outboundTransactions - List<String> - List of Outbound Transaction uuids related to this user
     - query the database and get list of all users in {email: "email", fullName: "fullName"} format
 - #### return:
     - list of **transactions**

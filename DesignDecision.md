@@ -35,11 +35,12 @@
 - we use DynamoDB to store all the user information and store all transactions in this system.
 ### Users Table
 - email - Primary Key, String
+- sub - String, the uuid provided by Cognito to identify a single user
 - fullName - String
 - ?publicKey – String
 - ?privateKey – String
 - inboundTransactions - String - List of Inbound Transaction uuids related to this user
-- iutboundTransactions - String - List of Outbound Transaction uuids related to this user
+- outboundTransactions - String - List of Outbound Transaction uuids related to this user
 
 
 
@@ -48,9 +49,9 @@
 - sender - String
 - reciever - String
 - status – OnGoing / Aborted / Resolved
-- state – Integer
-- eoo - String
-- eor - String
+- ~~state – Integer~~
+- ~~eoo - String~~
+- ~~eor - String~~
 - documentUri - String
 - createTime - Datetime
 - updateTime - Datetime

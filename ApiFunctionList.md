@@ -134,7 +134,7 @@ This function aimed to provide a message for user to find all unfinished process
     - jwt(localStorage)
 - #### process:
     - get user *email* from jwt
-    - use the *email* to find the OutboundTransactions (a list of uuids) of this user
+    - use the *email* to find the *OutboundTransactions* (a list of uuids) of this user
     - get list of **transactions** from the InboundTransactions, construct in following format:
         - transactionId
         - sender

@@ -141,6 +141,8 @@ This function aimed to provide a message for user to find all unfinished process
         - reciver
         - status
         - state
+        - createTime
+        - updateTime
     - query the database and get list of all users in {email: "email", fullName: "fullName"} format
 - #### return:
     - list of **transactions**

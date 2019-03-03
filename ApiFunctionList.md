@@ -44,14 +44,11 @@
     - decode the EOO with base64
     - get sub from *jwt*
     - get sender's *email* from *jwt*
-    - validate whether the *EOO* match with the document, 
-        - **if not**, mark the transaction as aborted, add message to remark field: EOO Signature not match with Original Document
-    - generate the signature of the document
     - create a transaction in DynamalDB, with following information:
         - transactionId: generated UUID 
         - sender: email of the sender(from jwt)
         - reciever: email of the reciever
-        - status: OnGoing if EOO match, Aborted if EOO not match
+        - status: OnGoing
         - state: 2
         - eoo: EOO that passed in
         - eor: empty
@@ -61,8 +58,11 @@
     - if transaction created: 
         - Update the user table with sender *email*, add the transaction to *outboundTransactions* list.
         - Update the user table with reciever *email*, add the transaction to *inboundTransactions* list.
+    - call "**12. verifySignature**" function, pass in *jwt*, *transactionId* to it.
+        - **if return true** update the transaction and mark the status as OnGoing
+        - **if return false** update the transaction and mark the status as Aborted add add message to remark field: *EOO Signature not match with the Original Document*
 - #### return:
-    - whether transaction successfully created or not
+    - whether transaction created successfully or not
 
 ## 5.confirmTransaction
 - #### input: 
@@ -75,13 +75,15 @@
     - get *Transaction* from DynamalDB by the *transactionId* that passed in
     - validate whether the *email* of the current user in jwt match with the reciever's email in the transaction
     - validate whether the *EOR* match with the *EOO* from the Transaction in DB, 
-        - **if not**, mark the transaction as **aborted**, add message to remark field: *EOR* not match with *EOO*
+        - **if not**, mark the transaction as **Aborted**, add message to remark field: **
     - generate the signature of the document
     - update a transaction in DynamalDB with *transactionId* provided, use following information:
-        - status: **Resolved** if EOR match, **Aborted** if EOR not match
         - state: 4
         - eor: EOR that passed in
         - updateTime - Current time
+    - call "**12. verifySignature**" function, pass in *jwt*, *transactionId* to it.
+        - **if return true** update the transaction and mark the status as OnGoing
+        - **if return false** update the transaction and mark the status as Aborted add add message to remark field: *EOR* Signature not match with the *EOO* Signature
 - #### return:
     - whether transaction confirmed successfully or not
 
@@ -134,13 +136,15 @@ This function aimed to provide a message for user to find all unfinished process
     - jwt(localStorage)
 - #### process:
     - get user *email* from jwt
-    - use the *email* to find the OutboundTransactions (a list of uuids) of this user
+    - use the *email* to find the *OutboundTransactions* (a list of uuids) of this user
     - get list of **transactions** from the InboundTransactions, construct in following format:
         - transactionId
         - sender
         - reciver
         - status
         - state
+        - createTime
+        - updateTime
     - query the database and get list of all users in {email: "email", fullName: "fullName"} format
 - #### return:
     - list of **transactions**
@@ -185,8 +189,20 @@ this function will be executed automatically after the user registered
         - email - String
         - sub - String, the uuid provided by Cognito to identify a single user
         - fullName - String
-        - inboundTransactions - String - List of Inbound Transaction uuids related to this user
-        - outboundTransactions - List<String> - List of Outbound Transaction uuids related to this user
     - query the database and get list of all users in {email: "email", fullName: "fullName"} format
 - #### return:
     - list of **transactions**
+
+## 12.verifySignature
+this function is designed to validate whether EOO or EOR match the transaction.
+- #### input: 
+    - jwt
+    - transactionId
+- #### process:
+    - find *transaction* in DB with *transactionId*
+    - **if EOR == null**
+        - validate whether EOO match with the document
+    - **if EOR != null**
+        - validate whether EOR match with the EOO
+- #### return:
+    - the result of validation(true or false)

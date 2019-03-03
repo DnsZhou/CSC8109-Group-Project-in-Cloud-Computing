@@ -33,9 +33,9 @@
 
 ## DynamoDB
 - we use DynamoDB to store all the user information and store all transactions in this system.
-### Users Table
+### FesUser Table
 - email - Primary Key, String
-- sub - String, the uuid provided by Cognito to identify a single user
+- sub - String, the uuid provided by *Cognito* to identify a single user
 - fullName - String
 - ?publicKey – String
 - ?privateKey – String
@@ -44,7 +44,7 @@
 
 
 
-## Transactions - (To keep track of the state of the message)
+## FesTransactions - (To keep track of the state of the message)
 - transactionId - Primary Key, String
 - sender - String
 - reciever - String
@@ -58,7 +58,12 @@
 - remark - String
 *Possibly use a mixture of JSON and Dynamo To keep track of state and accessing fair exchange variables*
 
-
+## Cognito - (to maintain all user login and register information)
+All our user login and register function will be implemented by AWS Cognito, and the user sub, email, full name will be maintained in user table in DynamoDB.
+Functions that provided by Cognito:
+- User Login
+- User Registeration
+- User Email Verify
 
 
 ## UML diagrams

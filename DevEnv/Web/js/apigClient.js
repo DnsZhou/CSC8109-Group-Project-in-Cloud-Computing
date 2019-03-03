@@ -173,13 +173,13 @@ apigClientFactory.newClient = function (config) {
     };
     
     
-    apigClient.userGetallusersGet = function (params, body, additionalParams) {
+    apigClient.userGetallusersPost = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
         apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
         
-        var userGetallusersGetRequest = {
-            verb: 'get'.toUpperCase(),
+        var userGetallusersPostRequest = {
+            verb: 'post'.toUpperCase(),
             path: pathComponent + uritemplate('/user/getallusers').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
@@ -187,7 +187,7 @@ apigClientFactory.newClient = function (config) {
         };
         
         
-        return apiGatewayClient.makeRequest(userGetallusersGetRequest, authType, additionalParams, config.apiKey);
+        return apiGatewayClient.makeRequest(userGetallusersPostRequest, authType, additionalParams, config.apiKey);
     };
     
     

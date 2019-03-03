@@ -84,7 +84,7 @@ function getAllUsers() {
         queryParams: {}
     };
 
-    apigClient.userGetallusersGet(params, body, additionalParams)
+    apigClient.userGetallusersPost(params, body, additionalParams)
         .then(function (result) {
             // Add success callback code here.
             console.log(result.data)

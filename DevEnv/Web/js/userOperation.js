@@ -7,6 +7,9 @@ var apigClient = apigClientFactory.newClient({
 window.onload = function () {
     verifyUserLogin();
     getAllUsers();
+    $('#inputGroupFileAddon04').on('click',()=>{
+        upload()
+    })
 }
 
 $(document).ready(function () {

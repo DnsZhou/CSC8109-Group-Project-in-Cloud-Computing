@@ -2,7 +2,7 @@
 
 ## 1.uploadDocument
 - #### input: 
-    - jwt(localStorage)
+    - jwt
     - document
 - #### process:
     - get sub from jwt
@@ -13,7 +13,7 @@
 
 ## 2.generateEooSignature
 - #### input: 
-    - jwt(localStorage)
+    - jwt
     - the location url of the document
 - #### process:
     - get sub from jwt
@@ -25,7 +25,7 @@
     
 ## 3.generateEorSignature
 - #### input: 
-    - jwt(localStorage)
+    - jwt
     - TransactionId
 - #### process:
     - get sub from jwt
@@ -36,7 +36,7 @@
 
 ## 4.creatTransaction
 - #### input: 
-    - jwt(localStorage)
+    - jwt
     - the location url of the document
     - the signature of the document(EOO) 
     - reciever's email
@@ -66,7 +66,7 @@
 
 ## 5.confirmTransaction
 - #### input: 
-    - jwt(localStorage)
+    - jwt
     - transactionId
     - the signature of EOO (AKA EOR)
 - #### process:
@@ -88,8 +88,9 @@
     - whether transaction confirmed successfully or not
 
 ## 6.getAllUsers
+get all users other than current user in jwt
 - #### input: 
-    - jwt(localStorage)
+    - jwt
 - #### process:
     - ~~validate where there is a jwt and the user email in jwt exist in User Table~~
     - query the database and get list of all users in {email: "email", fullName: "fullName"} format
@@ -98,7 +99,7 @@
 
 ## 7.getMyInboundTransactionList
 - #### input: 
-    - jwt(localStorage)
+    - jwt
 - #### process:
     - get user *email* from jwt
     - use the *email* to find *InboundTransactions* (a list of uuids) of this user
@@ -116,7 +117,7 @@
 ## 8.getMyUnreadInboundTransactionList
 This function aimed to provide a message for user to find all unfinished process and show as messages in homepage.
 - #### input: 
-    - jwt(localStorage)
+    - jwt
 - #### process:
     - get user *email* from jwt
     - use the *email* to find the InboundTransactions (a list of uuids) of this user
@@ -133,7 +134,7 @@ This function aimed to provide a message for user to find all unfinished process
 
 ## 9.getMyOutboundTransactionList
 - #### input: 
-    - jwt(localStorage)
+    - jwt
 - #### process:
     - get user *email* from jwt
     - use the *email* to find the *OutboundTransactions* (a list of uuids) of this user
@@ -151,7 +152,7 @@ This function aimed to provide a message for user to find all unfinished process
 
 ## 10.getTransactionDetails
 - #### input: 
-    - jwt(localStorage)
+    - jwt
     - transactionId
 - #### process:
     - get user *email* from jwt

@@ -1,7 +1,25 @@
 var WildRydes = window.WildRydes || {};
 var jwtToken = null;
+var apigClient = apigClientFactory.newClient({
+    apiKey: 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+});
 
 window.onload = function () {
+    verifyUserLogin();
+    getAllUsers();
+}
+
+$(document).ready(function () {
+
+});
+
+function logOut() {
+    localStorage.clear();
+    alert("User logout, Redirect to login page")
+    window.location.href = 'login.html';
+}
+
+function verifyUserLogin() {
     var signinUrl = './login.html';
 
     var poolData = {
@@ -46,11 +64,35 @@ window.onload = function () {
             window.location.href = 'login.html';
         }
     });
-
 }
 
-function logOut() {
-    localStorage.clear();
-    alert("User logout, Redirect to login page")
-    window.location.href = 'login.html';
+function getAllUsers() {
+    var params = {
+        // This is where any modeled request parameters should be added.
+        // The key is the parameter name, as it is defined in the API in API Gateway.
+        // param1: ''
+    };
+
+    var body = {
+        jwtToken: jwtToken
+    };
+
+    var additionalParams = {
+        // If there are any unmodeled query parameters or headers that must be
+        //   sent with the request, add them here.
+        headers: {},
+        queryParams: {}
+    };
+
+    apigClient.userGetallusersGet(params, body, additionalParams)
+        .then(function (result) {
+            // Add success callback code here.
+            console.log(result.data)
+            result.data.forEach((user)=>{
+                console.log(user);
+                $("#selectEmail").append("<option value='"+user.email+"'>"+user.fullName+"("+user.email+")</option>")
+            })
+        }).catch(function (result) {
+            // Add error callback code here.
+        });
 }

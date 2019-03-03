@@ -195,14 +195,8 @@ var apigClient = apigClientFactory.newClient({
         var additionalParams = {
             // If there are any unmodeled query parameters or headers that must be
             //   sent with the request, add them here.
-            headers: {
-                // "my_header": "my_value",
-                // "Access-Control-Allow-Origin" : "GET", // Required for CORS support to work
-                // "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
-            },
-            queryParams: {
-
-            }
+            headers: {},
+            queryParams: {}
         };
 
         apigClient.userLoginPost(params, body, additionalParams)

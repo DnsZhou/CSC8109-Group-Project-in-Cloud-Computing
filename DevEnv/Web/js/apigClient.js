@@ -280,6 +280,24 @@ apigClientFactory.newClient = function (config) {
         return apiGatewayClient.makeRequest(userLoginOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
+    apigClient.docUploadDocument = function (params, body, additionalParams) {
+        if (additionalParams === undefined) {
+            additionalParams = {};
+        }
+
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+
+        var uploadDocumentRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/document/upload').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+
+
+        return apiGatewayClient.makeRequest(uploadDocumentRequest, authType, additionalParams, config.apiKey);
+    };
 
     return apigClient;
 };

@@ -10,6 +10,9 @@ window.onload = function () {
     $('#inputGroupFileAddon04').on('click',()=>{
         upload()
     })
+    $('#button-addon2').on('click', ()=>{
+        generateEOO()
+    })
 }
 
 $(document).ready(function () {

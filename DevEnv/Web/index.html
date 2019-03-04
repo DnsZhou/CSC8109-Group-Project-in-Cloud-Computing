@@ -86,7 +86,7 @@
                     <label>EOO(Evidence Of Original) Signature</label>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="Input EOO Signature"
-                            aria-label="EOO Signature" aria-describedby="button-addon2">
+                            aria-label="EOO Signature" aria-describedby="button-addon2" id='inputEooDom'>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2">Generate</button>
                         </div>
@@ -172,7 +172,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <!-- Bootstrap Notify -->
-    <script src="https://bootstrap-notify.remabledesigns.com/js/bootstrap-notify.min.js"></script>
+    <script src="http://bootstrap-notify.remabledesigns.com/js/bootstrap-notify.min.js"></script>
 
     <!-- AWS Cognito Library -->
     <script src="./js/vendor/aws-cognito-sdk.min.js"></script>
@@ -193,6 +193,7 @@
 
     <!-- Customized JS -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js"></script>
     <script src="./js/config.js"></script>
     <script src="./js/notifyTest.js"></script>
     <script src="./js/upload.js"></script>

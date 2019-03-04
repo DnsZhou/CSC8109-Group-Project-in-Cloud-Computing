@@ -119,7 +119,7 @@ function generateEOO() {
             'x-api-key': 'aKMk5FuMXo8gA3etY97xh5SOhVSILTVb9UuHS5Wy'
         },
         data: {
-            jwtToken: jwtToken,
+            jwt: jwtToken,
             document_location: loc,
         }
     }).then((result) => {
@@ -149,7 +149,6 @@ function startExchange() {
             'x-api-key': 'Lz80XHUD0N64C5J5BLvUA9ayad1pBQ7Z7iw19PnR'
         },
         data: {
-            from: fromSelect.options[fromIndex].value,
             to: toSelect.options[toIndex].value,
             loc: loc,
             id: uuid,
@@ -161,7 +160,4 @@ function startExchange() {
     }).catch(function (error) {
         alert(error)
     })
-
-
-
 }

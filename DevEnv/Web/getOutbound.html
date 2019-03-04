@@ -1,0 +1,182 @@
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Customized CSS -->
+    <link rel="stylesheet" href="./css/FesMain.css">
+    <title>Fair Exchange System</title>
+    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.409.0.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">Fair Exchange System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">New Exchange<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Transactions</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="#">Inbound</a>
+                        <a class="dropdown-item" href="#">Outbound</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="logOut()">LogOut</a>
+                </li>
+            </ul>
+            <ul class="form-inline my-2 my-lg-0 navbar-text">
+                CSC8109 Group Project -- Team 3
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+        <div class="py-5 text-center">
+            <table class="table table-striped" id="tb">
+              <tr>
+                  <th>TransactionID</th>
+                  <th>Reciever</th>
+                  <th>Sender</th>
+                  <th>status</th>
+                  <th>state</th>
+                  <th>updateTime</th>
+                  <th>createTime</th>
+                </tr>
+              </table>
+          </div>
+    </main>
+    
+    <script type="text/javascript">
+
+      var scanTransactionUrl = 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/getOutbound';
+
+
+  
+        window.onload=function(){
+
+
+            var poolData = {
+                UserPoolId: _config.cognito.userPoolId,
+                ClientId: _config.cognito.userPoolClientId
+            };
+
+            var userPool;
+
+            userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+
+            userEmail = userPool.getCurrentUser();
+
+            var splitArr = userEmail.storage.key(userEmail.username).split('.')
+
+            splitArr.pop()
+            // splitArr.splice(2,1)
+
+            splitArr.push(userEmail.username,'idToken')
+
+            jwtTokenKey = splitArr.join('.')
+
+            var jwtToken = localStorage.getItem(jwtTokenKey);
+
+            console.log(jwtToken)
+
+          axios({
+            method: 'post',
+              url: scanTransactionUrl,
+              headers: {
+                'x-api-key': 'j9WCv0pgmEBMptwWR2pK83AKl2p51DC1hAWJXmqj'
+              },
+              data: {
+                jwt: JSON.stringify(jwtToken), //userEmail.username
+              }
+          }).then((result) => {
+            
+            console.log(result)
+
+              var data =JSON.parse(result.data.body);
+  
+              console.log(data);
+              
+              var arrData =[]
+              for(let i in data){
+                let userInfo = []
+                userInfo[0] = data[i].transactionId;
+                userInfo[1] = data[i].reciever;
+                userInfo[2] = data[i].sender;
+                userInfo[3] = data[i].status;
+                userInfo[4] = data[i].state;
+                userInfo[5] = data[i].updateTime;
+                userInfo[6] = data[i].createTime;
+
+
+                arrData.push(userInfo)
+              }
+              
+              console.log(arrData)
+
+  
+              for(var i=0;i < arrData.length;i++){
+  
+                var x=document.getElementById('tb').insertRow();
+                for(var j=0; j < arrData[i].length; j++){
+  
+                  var cell=x.insertCell();
+                  cell.innerHTML=arrData[i][j];
+                  }
+                }
+  
+              })
+  
+        }
+  
+  
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap Notify -->
+    <script src="http://bootstrap-notify.remabledesigns.com/js/bootstrap-notify.min.js"></script>
+
+    <!-- AWS Cognito Library -->
+    <script src="./js/vendor/aws-cognito-sdk.min.js"></script>
+    <script src="./js/vendor/amazon-cognito-identity.min.js"></script>
+
+    <!-- Customized JS -->
+    <script src="./js/config.js"></script>
+    <script src="./js/notifyTest.js"></script>
+    <!-- <script src="./js/loginVerification.js"></script> -->
+</body>
+
+</html>

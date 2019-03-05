@@ -152,23 +152,51 @@ function startExchange() {
                 signature_base64: userEoo
             }
         }).then((result) => {
-            console.log('success', result)
             if (result.data) {
                 status = 'OnGoing'
             } else {
                 status = 'Abort'
             }
-            closeButton.trigger('click')
+            moveObject(transactionId, status, userEoo)
+                .then((data) => {
+                    console.log('success', data)
+                    closeButton.trigger('click')
+                })
+                .catch((err) => {
+                    closeButton.trigger('click')
+                    alert('transaction error', err)
+                    console.log(3)
+                })
         }).catch(function (error) {
             closeButton.trigger('click')
             alert('transaction error', error)
+            console.log(1)
         })
     }).catch(function (error) {
         closeButton.trigger('click')
         alert('transaction error', error)
+        console.log(2)
     })
-
-
-
-
 }
+
+let moveObject = (id, status, eoo) =>
+    new Promise((resolve, reject) => {
+        axios({
+            method: 'post',
+            url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/document/move',
+            headers: {
+                'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+            },
+            data: {
+                id: id,
+                state: status,
+                jwtToken: jwtToken,
+                loc: loc,
+                eoo: eoo
+            }
+        }).then((result) => {
+            resolve(result)
+        }).catch(function (error) {
+            reject(error)
+        })
+    })

@@ -13,6 +13,9 @@ window.onload = function () {
     $('#button-addon2').on('click', ()=>{
         generateEOO()
     })
+    $('#startTransaction').on('click', ()=>{
+        startExchange()
+    })
 }
 
 $(document).ready(function () {

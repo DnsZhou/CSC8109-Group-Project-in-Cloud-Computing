@@ -3,7 +3,9 @@
 // });
 
 var loc = ''
+var locKey = false
 var eoo = ''
+var eooKey = false
 var generateEOOUrl = 'https://e0sjfe7hvb.execute-api.us-east-2.amazonaws.com/prod/ReturnandSaveEOO'
 
 
@@ -66,52 +68,26 @@ function upload() {
                 "Access-Control-Allow-Credentials": true
             }
         };
+
+
         axios.put(signedUrl, uploadFile, options)
             .then((data) => {
                 alert('Upload success')
                 console.log(data)
-                loc = data.config.url
+                locKey = true
+                loc = uploadFile.name
             })
             .catch(function (error) {
-                console.log(error)
+                alert('Upload error')
             })
     })
-    // apigClient.docUploadDocument(params, body, additionalParams)
-    //     .then(function (result) {
-    //         // Add success callback code here.
-    //         var signedUrl = JSON.parse(result.data.body);
-    //         signedUrl = signedUrl.url
-    //         console.log(signedUrl)
-
-    //         var options = {
-    //             headers: {
-    //                 'Content-Type': uploadFile.type,
-    //                 "my_header": "my_value",
-    //                 "Access-Control-Allow-Origin": "*",
-    //                 "Access-Control-Max-Age": 36000,
-    //                 "Access-Control-Allow-Credentials": true
-    //             }
-    //         };
-    //         axios.put(signedUrl, uploadFile, options)
-    //             .then((data) => {
-    //                 console.log(data)
-    //             })
-    //             .catch(function (error) {
-    //                 console.log(error)
-    //             })
-    //     }).catch(function (result) {
-    //         // Add error callback code here.
-    //     });
 }
 
 function generateEOO() {
-    if (!loc) {
+    if (!locKey) {
         alert('Please upload a file first')
         return
     }
-
-    let inputDom = $('#inputEooDom')
-
     axios({
         method: 'post',
         url: generateEOOUrl,
@@ -123,41 +99,76 @@ function generateEOO() {
             document_location: loc,
         }
     }).then((result) => {
-        console.log(result)
-        eoo = result.data.eoo
+        alert('generate success')
+        document.getElementById("inputEooDom").value = result.data;
+        eoo = result.data
+        eooKey = true
+        // s
     }).catch(function (error) {
-        alert(error)
+        alert('generate error')
     })
 }
 
 function startExchange() {
-    if (!loc) {
+    if (!locKey) {
         alert('Please upload a file first')
         return
     }
 
-    if (!eoo) {
+    if (!eooKey) {
         alert('Please generate an eoo first')
     }
 
-    let uuid = uuid()
+    userEoo = document.getElementById("inputEooDom").value
+    closeButton = $('.close')
+    status = ''
+    let transactionId = uuid()
 
     axios({
         method: 'post',
-        url: uploadTransUrl,
+        url: 'https://e0sjfe7hvb.execute-api.us-east-2.amazonaws.com/prod/verifyEOO',
         headers: {
-            'x-api-key': 'Lz80XHUD0N64C5J5BLvUA9ayad1pBQ7Z7iw19PnR'
+            'x-api-key': 'aKMk5FuMXo8gA3etY97xh5SOhVSILTVb9UuHS5Wy'
         },
         data: {
-            to: toSelect.options[toIndex].value,
-            loc: loc,
-            id: uuid,
-            eoo: ''
+            jwt: jwtToken,
+            document_location: loc,
+            signature_base64: userEoo
         }
     }).then((result) => {
-        alert('Success')
+        console.log('success', result)
+        if (result.data) {
+            status = 'Ongoing'
+        } else {
+            status = 'Aborted'
+        }
 
+        axios({
+            method: 'post',
+            url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/transaction/start',
+            headers: {
+                'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+            },
+            data: {
+                to: $('#selectEmail').val(),
+                loc: loc,
+                id: transactionId,
+                state: status,
+                jwtToken: jwtToken
+            }
+        }).then((result) => {
+            console.log(result)
+            closeButton.trigger('click')
+            alert('transaction success')
+        }).catch(function (error) {
+            alert(error)
+        })
+
+        
     }).catch(function (error) {
-        alert(error)
+        closeButton.trigger('click')
+        alert('transaction error')
     })
+
+
 }

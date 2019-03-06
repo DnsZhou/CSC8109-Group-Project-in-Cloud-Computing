@@ -121,54 +121,82 @@ function startExchange() {
 
     userEoo = document.getElementById("inputEooDom").value
     closeButton = $('.close')
-    status = ''
+    status = 'OnGoing'
     let transactionId = uuid()
 
     axios({
         method: 'post',
-        url: 'https://e0sjfe7hvb.execute-api.us-east-2.amazonaws.com/prod/verifyEOO',
+        url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/transaction/start',
         headers: {
-            'x-api-key': 'aKMk5FuMXo8gA3etY97xh5SOhVSILTVb9UuHS5Wy'
+            'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
         },
         data: {
-            jwt: jwtToken,
-            document_location: loc,
-            signature_base64: userEoo
+            to: $('#selectEmail').val(),
+            id: transactionId,
+            state: status,
+            jwtToken: jwtToken,
+            loc: loc
         }
     }).then((result) => {
-        console.log('success', result)
-        if (result.data) {
-            status = 'Ongoing'
-        } else {
-            status = 'Aborted'
-        }
-
+        console.log(result)
+        // alert('transaction success')
         axios({
             method: 'post',
-            url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/transaction/start',
+            url: 'https://e0sjfe7hvb.execute-api.us-east-2.amazonaws.com/prod/verifyEOO',
+            headers: {
+                'x-api-key': 'aKMk5FuMXo8gA3etY97xh5SOhVSILTVb9UuHS5Wy'
+            },
+            data: {
+                jwt: jwtToken,
+                document_location: loc,
+                signature_base64: userEoo
+            }
+        }).then((result) => {
+            if (result.data) {
+                status = 'OnGoing'
+            } else {
+                status = 'Abort'
+            }
+            moveObject(transactionId, status, userEoo)
+                .then((data) => {
+                    console.log('success', data)
+                    closeButton.trigger('click')
+                })
+                .catch((err) => {
+                    closeButton.trigger('click')
+                    alert('transaction error', err)
+                    console.log(3)
+                })
+        }).catch(function (error) {
+            closeButton.trigger('click')
+            alert('transaction error', error)
+            console.log(1)
+        })
+    }).catch(function (error) {
+        closeButton.trigger('click')
+        alert('transaction error', error)
+        console.log(2)
+    })
+}
+
+let moveObject = (id, status, eoo) =>
+    new Promise((resolve, reject) => {
+        axios({
+            method: 'post',
+            url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/document/move',
             headers: {
                 'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
             },
             data: {
-                to: $('#selectEmail').val(),
-                loc: loc,
-                id: transactionId,
+                id: id,
                 state: status,
-                jwtToken: jwtToken
+                jwtToken: jwtToken,
+                loc: loc,
+                eoo: eoo
             }
         }).then((result) => {
-            console.log(result)
-            closeButton.trigger('click')
-            alert('transaction success')
+            resolve(result)
         }).catch(function (error) {
-            alert(error)
+            reject(error)
         })
-
-        
-    }).catch(function (error) {
-        closeButton.trigger('click')
-        alert('transaction error')
     })
-
-
-}

@@ -48,7 +48,7 @@
 - transactionId - Primary Key, String
 - sender - String
 - reciever - String
-- transactionStatus – OnGoing / Aborted / Resolved
+- transactionState – OnGoing / Aborted / Resolved
 - ~~state – Integer~~
 - ~~eoo - String~~
 - ~~eor - String~~

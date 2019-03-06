@@ -48,7 +48,7 @@
         - transactionId: generated UUID 
         - sender: email of the sender(from jwt)
         - reciever: email of the reciever
-        - status: OnGoing
+        - transactionState: OnGoing
         - state: 2
         - eoo: EOO that passed in
         - eor: empty
@@ -60,10 +60,10 @@
         - Update the user table with reciever *email*, add the transaction to *inboundTransactions* list.
     - call "**12. verifySignature**" function, pass in *jwt*, *transactionId* to it.
         - **if return true** 
-            - update the transaction and mark the status as *OnGoing*
+            - update the transaction and mark the transactionState as *OnGoing*
             - call **13. createSQSMessage** function, pass the transactionId to the function.
                 -the function will add a message to queue and at the end of the queue, it will move EOO from sender folder to reciver folder
-        - **if return false** update the transaction and mark the status as Aborted add add message to remark field: *EOO Signature not match with the Original Document*
+        - **if return false** update the transaction and mark the transactionState as Aborted add add message to remark field: *EOO Signature not match with the Original Document*
 
 - #### return:
     - whether transaction created successfully or not
@@ -87,10 +87,10 @@
         - updateTime - Current time
     - call "**12. verifySignature**" function, pass in *jwt*, *transactionId* to it.
         - **if return true** 
-            - update the transaction and mark the status as *Resolved*
+            - update the transaction and mark the transactionState as *Resolved*
             - call **13. createSQSMessage** function, pass the transactionId to the function.
                 -the function will add a message to queue and at the end of the queue, it will move EOR from Reciver folder to Sender folder and move document from sender folder to reciver folder
-        - **if return false** update the transaction and mark the status as Aborted add add message to remark field: *EOR* Signature not match with the *EOO* Signature
+        - **if return false** update the transaction and mark the transactionState as Aborted add add message to remark field: *EOR* Signature not match with the *EOO* Signature
 - #### return:
     - whether transaction confirmed successfully or not
 
@@ -114,7 +114,7 @@ get all users other than current user in jwt
         - transactionId
         - sender
         - reciver
-        - status
+        - transactionState
         - state
         - createTime
         - updateTime
@@ -128,11 +128,11 @@ This function aimed to provide a message for user to find all unfinished process
 - #### process:
     - get user *email* from jwt
     - use the *email* to find the InboundTransactions (a list of uuids) of this user
-    - get list of **transactions** from the InboundTransactions, which has a status of **onGoing** construct in following format:
+    - get list of **transactions** from the InboundTransactions, which has a transactionState of **onGoing** construct in following format:
         - transactionId
         - sender
         - reciver
-        - status
+        - transactionState
         - state
         - createTime
         - updateTime
@@ -149,7 +149,7 @@ This function aimed to provide a message for user to find all unfinished process
         - transactionId
         - sender
         - reciver
-        - status
+        - transactionState
         - state
         - createTime
         - updateTime
@@ -168,14 +168,14 @@ This function aimed to provide a message for user to find all unfinished process
         - **if (*email* == transaction.sender):**
             - construct transaction json object with full information
         - **else if (*email* == transaction.reciver:**)
-            - **if (*transaction*.status == Resolved**)
+            - **if (*transaction*.transactionState == Resolved**)
                 - construct transaction json object with full information
-            - **else if (*transaction*.status != Resolved**)
+            - **else if (*transaction*.transactionState != Resolved**)
                 -  construct transaction json object as following:
                     - transactionId
                     - Sender
                     - Reciever
-                    - transactionStatus
+                    - transactionState
                     - CreateTime
                     - UpdateTime
                     - Remark

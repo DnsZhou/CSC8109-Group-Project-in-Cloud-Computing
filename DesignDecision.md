@@ -37,8 +37,8 @@
 - email - Primary Key, String
 - sub - String, the uuid provided by *Cognito* to identify a single user
 - fullName - String
-- ?publicKey – String
-- ?privateKey – String
+- ~~?publicKey – String~~
+- ~~?privateKey – String~~
 - inboundTransactions - String - List of Inbound Transaction uuids related to this user
 - outboundTransactions - String - List of Outbound Transaction uuids related to this user
 
@@ -48,7 +48,7 @@
 - transactionId - Primary Key, String
 - sender - String
 - reciever - String
-- status – OnGoing / Aborted / Resolved
+- transactionStatus – OnGoing / Aborted / Resolved
 - ~~state – Integer~~
 - ~~eoo - String~~
 - ~~eor - String~~

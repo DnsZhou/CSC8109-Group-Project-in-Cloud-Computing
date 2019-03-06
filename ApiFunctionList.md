@@ -175,13 +175,12 @@ This function aimed to provide a message for user to find all unfinished process
                     - transactionId
                     - Sender
                     - Reciever
-                    - Status
-                    - State
-                    - EOO
-                    - EOR (can be empty if reciver have not confirm the transaction)
+                    - transactionStatus
                     - CreateTime
                     - UpdateTime
                     - Remark
+                    - EOO (from S3)
+                    - EOR (from S3, can be empty if reciver have not confirm the transaction)
         - **else**: return error message "Current user is not authorized to view this transaction"
 - #### return:
     - json object *transaction* or error message

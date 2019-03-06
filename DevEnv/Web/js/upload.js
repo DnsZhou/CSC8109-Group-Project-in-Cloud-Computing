@@ -160,7 +160,16 @@ function startExchange() {
             moveObject(transactionId, status, userEoo)
                 .then((data) => {
                     console.log('success', data)
+                    alert('transaction success', data)
+                    userEoo = ''
+                    loc = ''
+                    locKey = false
+                    eooKey = false
                     closeButton.trigger('click')
+                    if (!data.data){
+                        closeButton.trigger('click')
+                        alert('transaction error', err)
+                    }
                 })
                 .catch((err) => {
                     closeButton.trigger('click')

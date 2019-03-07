@@ -157,7 +157,7 @@ function startExchange() {
             } else {
                 status = 'Abort'
             }
-            moveObject(transactionId, status, userEoo)
+            moveObject(transactionId, status, userEoo, $('#selectEmail').val())
                 .then((data) => {
                     console.log('success', data)
                     alert('transaction success', data)
@@ -166,10 +166,6 @@ function startExchange() {
                     locKey = false
                     eooKey = false
                     closeButton.trigger('click')
-                    if (!data.data){
-                        closeButton.trigger('click')
-                        alert('transaction error', err)
-                    }
                 })
                 .catch((err) => {
                     closeButton.trigger('click')
@@ -188,7 +184,7 @@ function startExchange() {
     })
 }
 
-let moveObject = (id, status, eoo) =>
+let moveObject = (id, status, eoo, receiver) =>
     new Promise((resolve, reject) => {
         axios({
             method: 'post',
@@ -201,7 +197,7 @@ let moveObject = (id, status, eoo) =>
                 state: status,
                 jwtToken: jwtToken,
                 loc: loc,
-                eoo: eoo
+                eoo: eoo,
             }
         }).then((result) => {
             resolve(result)

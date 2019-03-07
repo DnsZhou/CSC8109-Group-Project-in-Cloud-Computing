@@ -42,82 +42,92 @@ exports.handler = (event, context, callback) => {
                     };
                     callback(null, response);
                 } else {
-                    var transaction = data.Items[0];
-                    console.log("scan executed successfully")
-                    if (decodedJwt.email == transaction.sender) {
-                        console.log("Execute sender")
-                        transaction.eoo = currentEoo;
-                        transaction.eor = currentEor;
+                    if (!data || !data.Items || data.Items.length == 0) {
+                        console.log("Error: Transaction -- " + currentTransactionId + "not found in system.")
                         let response = {
-                            "statusCode": 200,
+                            "statusCode": 404,
                             "headers": HEADERS,
-                            "body": JSON.stringify(transaction)
-                        }
+                            "body": JSON.stringify("Error: Transaction -- " + currentTransactionId + "not found in system."),
+                        };
                         callback(null, response);
-                    } else if (decodedJwt.email == transaction.reciever) {
-                        if (transaction.transactionState == "Resolved") {
-                            console.log("Execute reciever resolved")
+                    } else {
+                        var transaction = data.Items[0];
+                        console.log("scan executed successfully")
+                        if (decodedJwt.email == transaction.sender) {
+                            console.log("Execute sender")
                             transaction.eoo = currentEoo;
                             transaction.eor = currentEor;
                             let response = {
                                 "statusCode": 200,
                                 "headers": HEADERS,
                                 "body": JSON.stringify(transaction)
-                            };
+                            }
                             callback(null, response);
-                        } else if (transaction.transactionState == "OnGoing") {
-                            console.log("Execute reciever onGoing")
-                            var trimedTransaction = {
-                                "transactionId": transaction.transactionId,
-                                "sender": transaction.sender,
-                                "reciever": transaction.reciever,
-                                "transactionState": transaction.transactionState,
-                                "createTime": transaction.createTime,
-                                "updateTime": transaction.updateTime,
-                                "remark": transaction.remark
-                            };
-                            trimedTransaction.eoo = currentEoo;
-                            let response = {
-                                "statusCode": 200,
-                                "headers": HEADERS,
-                                "body": JSON.stringify(trimedTransaction)
-                            };
-                            console.log(response);
-                            callback(null, response);
-                        } else if (transaction.transactionState == "Aborted") {
-                            console.log("Execute reciever aborted")
-                            var trimedTransaction = {
-                                "transactionId": transaction.transactionId,
-                                "sender": transaction.sender,
-                                "reciever": transaction.reciever,
-                                "transactionState": transaction.transactionState,
-                                "createTime": transaction.createTime,
-                                "updateTime": transaction.updateTime,
-                                "remark": transaction.remark
-                            };
-                            let response = {
-                                "statusCode": 200,
-                                "headers": HEADERS,
-                                "body": JSON.stringify(trimedTransaction)
-                            };
-                            callback(null, response);
+                        } else if (decodedJwt.email == transaction.reciever) {
+                            if (transaction.transactionState == "Resolved") {
+                                console.log("Execute reciever resolved")
+                                transaction.eoo = currentEoo;
+                                transaction.eor = currentEor;
+                                let response = {
+                                    "statusCode": 200,
+                                    "headers": HEADERS,
+                                    "body": JSON.stringify(transaction)
+                                };
+                                callback(null, response);
+                            } else if (transaction.transactionState == "OnGoing") {
+                                console.log("Execute reciever onGoing")
+                                var trimedTransaction = {
+                                    "transactionId": transaction.transactionId,
+                                    "sender": transaction.sender,
+                                    "reciever": transaction.reciever,
+                                    "transactionState": transaction.transactionState,
+                                    "createTime": transaction.createTime,
+                                    "updateTime": transaction.updateTime,
+                                    "remark": transaction.remark
+                                };
+                                trimedTransaction.eoo = currentEoo;
+                                let response = {
+                                    "statusCode": 200,
+                                    "headers": HEADERS,
+                                    "body": JSON.stringify(trimedTransaction)
+                                };
+                                console.log(response);
+                                callback(null, response);
+                            } else if (transaction.transactionState == "Aborted") {
+                                console.log("Execute reciever aborted")
+                                var trimedTransaction = {
+                                    "transactionId": transaction.transactionId,
+                                    "sender": transaction.sender,
+                                    "reciever": transaction.reciever,
+                                    "transactionState": transaction.transactionState,
+                                    "createTime": transaction.createTime,
+                                    "updateTime": transaction.updateTime,
+                                    "remark": transaction.remark
+                                };
+                                let response = {
+                                    "statusCode": 200,
+                                    "headers": HEADERS,
+                                    "body": JSON.stringify(trimedTransaction)
+                                };
+                                callback(null, response);
+                            } else {
+                                console.log("Error: Current transaction -- " + currentTransactionId + "do not have a validated transactionState.")
+                                let response = {
+                                    "statusCode": 403,
+                                    "headers": HEADERS,
+                                    "body": JSON.stringify("Error: Current transaction -- " + currentTransactionId + "do not have a validated transactionState."),
+                                };
+                                callback(null, response);
+                            }
                         } else {
-                            console.log("Error: Current transaction -- " + currentTransactionId + "do not have a validated transactionState.")
+                            console.log("Invalidate Request: Current user -- " + decodedJwt.email + " is not authorized to view this transaction -- " + currentTransactionId);
                             let response = {
                                 "statusCode": 403,
                                 "headers": HEADERS,
-                                "body": JSON.stringify("Error: Current transaction -- " + currentTransactionId + "do not have a validated transactionState."),
+                                "body": JSON.stringify("Invalidate Request: Current user -- " + decodedJwt.email + " is not authorized to view this transaction -- " + currentTransactionId),
                             };
                             callback(null, response);
                         }
-                    } else {
-                        console.log("Invalidate Request: Current user -- " + decodedJwt.email + " is not authorized to view this transaction -- " + currentTransactionId);
-                        let response = {
-                            "statusCode": 403,
-                            "headers": HEADERS,
-                            "body": JSON.stringify("Invalidate Request: Current user -- " + decodedJwt.email + " is not authorized to view this transaction -- " + currentTransactionId),
-                        };
-                        callback(null, response);
                     }
                 }
             });

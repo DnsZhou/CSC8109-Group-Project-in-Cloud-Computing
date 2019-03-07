@@ -78,8 +78,6 @@
     - get *sub* from *jwt*
     - get *Transaction* from DynamalDB by the *transactionId* that passed in
     - validate whether the *email* of the current user in jwt match with the reciever's email in the transaction
-    - validate whether the *EOR* match with the *EOO* from the Transaction in DB, 
-        - **if not**, mark the transaction as **Aborted**, add message to remark field: **
     - generate the signature of the document
     - update a transaction in DynamalDB with *transactionId* provided, use following information:
         - state: 4

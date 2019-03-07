@@ -92,7 +92,7 @@ function refreshCurrentTransaction(transactionData) {
     if (currentUser.username == transactionData.sender) {
         testSenderTransaction();
     } else if (currentUser.username == transactionData.receiver) {
-        testrecieverTransaction();
+        testRecieverTransaction();
     }
     $("#transactionId").text(transactionData.transactionId);
     $("#createTime").text(transactionData.createTime);

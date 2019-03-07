@@ -56,7 +56,9 @@ exports.handler = (event, context, callback) => {
                         if (decodedJwt.email == transaction.sender) {
                             console.log("Execute sender")
                             transaction.eoo = currentEoo;
-                            transaction.eor = currentEor;
+                            if (transaction.transactionState == "Resolved") {
+                                transaction.eor = currentEor;
+                            }
                             let response = {
                                 "statusCode": 200,
                                 "headers": HEADERS,

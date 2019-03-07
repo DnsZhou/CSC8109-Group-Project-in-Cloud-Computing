@@ -59,8 +59,8 @@
             <table class="table table-striped" id="tb">
               <tr>
                   <th>TransactionID</th>
-                  <th>Reciever</th>
                   <th>Sender</th>
+                  <th>Reciever</th>
                   <th>Status</th>
                   <!-- <th>state</th> -->
                   <th>UpdateTime</th>
@@ -120,14 +120,16 @@
   
               console.log(data);
               
+                // console.log(data[0].transactionState)
+
               var arrData =[]
               for(let i in data){
                 let userInfo = []
-                userInfo[0] = '<a href="https://transactionDetails.html?transaction_id=' + data[i].transactionId + '">' +
+                userInfo[0] = '<a href="./transactionDetails.html?transaction_id=' + data[i].transactionId + '">' +
                     data[i].transactionId + '</a>';
-                userInfo[1] = data[i].reciever;
-                userInfo[2] = data[i].sender;
-                userInfo[3] = data[i].transactionState;
+                userInfo[1] = data[i].sender;
+                userInfo[2] = data[i].reciever;
+                userInfo[3] = data[i].status;
                 // userInfo[4] = data[i].state;
                 userInfo[4] = data[i].updateTime;
                 userInfo[5] = data[i].createTime;

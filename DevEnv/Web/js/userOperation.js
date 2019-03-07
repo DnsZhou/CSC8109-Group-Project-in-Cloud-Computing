@@ -1,5 +1,6 @@
 var WildRydes = window.WildRydes || {};
 var jwtToken = null;
+var currentUser = null;
 var apigClient = apigClientFactory.newClient({
     apiKey: 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
 });
@@ -7,13 +8,13 @@ var apigClient = apigClientFactory.newClient({
 window.onload = function () {
     verifyUserLogin();
     getAllUsers();
-    $('#inputGroupFileAddon04').on('click',()=>{
+    $('#inputGroupFileAddon04').on('click', () => {
         upload()
     })
-    $('#button-addon2').on('click', ()=>{
+    $('#button-addon2').on('click', () => {
         generateEOO()
     })
-    $('#startTransaction').on('click', ()=>{
+    $('#startTransaction').on('click', () => {
         startExchange()
     })
 }
@@ -23,6 +24,7 @@ $(document).ready(function () {
 });
 
 function logOut() {
+    currentUser = null;
     localStorage.clear();
     alert("User logout, Redirect to login page")
     window.location.href = 'login.html';
@@ -41,6 +43,7 @@ function verifyUserLogin() {
     if (!(_config.cognito.userPoolId &&
         _config.cognito.userPoolClientId &&
         _config.cognito.region)) {
+        currentUser = null;
         $('#noCognitoMessage').show();
         return;
     }
@@ -52,6 +55,7 @@ function verifyUserLogin() {
     }
 
     WildRydes.signOut = function signOut() {
+        currentUser = null;
         userPool.getCurrentUser().signOut();
     };
 
@@ -66,9 +70,12 @@ function verifyUserLogin() {
                 } else {
                     jwtToken = session.getIdToken().getJwtToken()
                     resolve(jwtToken);
+                    currentUser = cognitoUser;
+                    $("#userName").text(currentUser.username);
                 }
             });
         } else {
+            currentUser = null;
             alert("Unauthorized user, Please Login!")
             window.location.href = 'login.html';
         }
@@ -97,9 +104,8 @@ function getAllUsers() {
         .then(function (result) {
             // Add success callback code here.
             console.log(result.data)
-            result.data.forEach((user)=>{
-                console.log(user);
-                $("#selectEmail").append("<option value='"+user.email+"'>"+user.fullName+"("+user.email+")</option>")
+            result.data.forEach((user) => {
+                $("#selectEmail").append("<option value='" + user.email + "'>" + user.fullName + "(" + user.email + ")</option>")
             })
         }).catch(function (result) {
             // Add error callback code here.

@@ -45,29 +45,39 @@
                     <a class="nav-link" href="#" onclick="logOut()">LogOut</a>
                 </li>
             </ul>
-            <ul class="form-inline my-2 my-lg-0 navbar-text">
-                CSC8109 Group Project -- Team 3
+            <ul id="userName" class="form-inline my-2 my-lg-0 navbar-text">
             </ul>
         </div>
     </nav>
 
     <main role="main" class="container">
         <div class="row">
-            <div class="col-md-2">
-                <p>Test button</p>
+            <div class="col-md-1">
+                <p>Test</p>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3">
                 <div class="btn-group btn-group-sm" role="group" aria-label="test button">
                     <button type="button" class="btn btn-secondary"
                         onclick="testResolvedTransaction()">Resolved</button>
-                    <button type="button" class="btn btn-secondary" onclick="testOnGoingTransaction()">On Going</button>
+                    <button type="button" class="btn btn-secondary" onclick="testOnGoingTransaction()">OnGoing</button>
                     <button type="button" class="btn btn-secondary" onclick="testAbortedTransaction()">Aborted</button>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-2">
                 <div class="btn-group btn-group-sm" role="group" aria-label="test button">
                     <button type="button" class="btn btn-secondary" onclick="testSenderTransaction()">Sender</button>
-                    <button type="button" class="btn btn-secondary" onclick="testReciverTransaction()">Reciver</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="testRecieverTransaction()">Reciever</button>
+                </div>
+            </div>
+            <div class="col-md-4 btn-group btn-group-sm" role="group" aria-label="test button">
+                <input id="testTransactionId" type="text" class="form-control" placeholder="input test Transaction Id"
+                    value="0e1580b6-2f74-4dff-ba8f-40837ebbd8d9">
+            </div>
+            <div class="col-md-2">
+                <div class="btn-group btn-group-sm" role="group" aria-label="test button">
+                    <button type="button" class="btn btn-secondary" onclick="testGetTransactionWithId()">test
+                        Get</button>
                 </div>
             </div>
         </div>
@@ -101,11 +111,19 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="text-muted">Transaction ID</div>
-                                <strong>369d951b-963a-4986-b911-4cc8262532c5</strong>
+                                <strong>
+                                    <div id="transactionId">
+                                        Null
+                                    </div>
+                                </strong>
                             </div>
                             <div class="col-md-6 text-md-right">
                                 <div class="text-muted">Create Time</div>
-                                <strong>October 2, 2018 - 03:45 pm</strong>
+                                <strong>
+                                    <div id="createTime">
+                                        Null
+                                    </div>
+                                </strong>
                             </div>
                         </div>
 
@@ -115,23 +133,28 @@
                             <div class="col-md-6">
                                 <div class="text-muted">Sender(From)</div>
                                 <strong>
-                                    Tong Zhou
+                                    <div id="sender">
+                                        Null
+                                    </div>
                                 </strong>
                                 <p>
-                                    <a href="mailto: zt1020@yeah.net">
-                                        zt1020@yeah.net
+                                    <a id="senderEmail">
+                                        Null
                                     </a>
                                 </p>
                             </div>
                             <div class="col-md-6 text-md-right">
-                                <div class="text-muted">Reciver(To)</div>
+                                <div class="text-muted">Reciever(To)</div>
                                 <strong>
-                                    Christopher
+                                    <div id="reciever">
+                                        Null
+                                    </div>
                                 </strong>
                                 <p>
-                                    <a href="mailto: chris.clark876@gmail.com">
-                                        chris.clark876@gmail.com
+                                    <a id="recieverEmail">
+                                        Null
                                     </a>
+                                    <!-- <a href="mailto: chris.clark876@gmail.com"> -->
                                 </p>
                             </div>
                         </div>
@@ -148,8 +171,9 @@
                                 <tr>
                                     <td>Evidence of Original(EOO)</td>
                                     <td>
-                                        <textarea style="width: 100%"
-                                            disabled>ZDNkM0xtZHZiMmRzWlM1amIyZHNaUzVqYjIyMGQzZDNMZDNkM0xtZHZiMmRzWbWR</textarea>
+                                        <textarea id="eoo" style="width: 100%" disabled>
+                                            Null
+                                        </textarea>
                                     </td>
                                 </tr>
                                 <tr>
@@ -158,17 +182,18 @@
                                         Not Provided
                                     </td>
                                     <td class="statusResolved hidden">
-                                        <textarea style="width: 100%"
-                                            disabled>ZDNkM0xtZHZiMmRzWlM1amIyZHNaUzVqYjIyMGQzZDNMZDNkM0xtZHZiMmRzWbWR</textarea>
+                                        <textarea id="eor" style="width: 100%" disabled>
+                                            Null
+                                        </textarea>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Document</td>
-                                    <td class="statusAborted reciverOnGoing reciverAborted statusOnGoing">
+                                    <td class="statusAborted recieverOnGoing recieverAborted statusOnGoing">
                                         Not Available
                                     </td>
                                     <td class="statusResolved senderOnGoing senderAborted hidden">
-                                        <a href="#">contract.doc</a>
+                                        <a id="documnetUri" href="#">Download</a>
                                     </td>
 
                                 </tr>
@@ -176,7 +201,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="statusOnGoing reciverOnGoing">
+                <div class="statusOnGoing recieverOnGoing">
                     <form>
                         <h4 class="mb-3">EOR Signature</h4>
                         <label>EOR(Evidence Of Receipt) Signature</label>
@@ -220,7 +245,7 @@
                 <div class="senderOnGoing hidden">
                     <div class="mb-3 text-center">
                         <div class="alert alert-primary" role="alert">
-                            Waiting for Reciver to confirm this exchange transaction
+                            Waiting for Reciever to confirm this exchange transaction
                         </div>
                     </div>
                 </div>
@@ -229,7 +254,7 @@
         </div>
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">&copy; 2019 Newcastle University</p>
+            <p class="mb-1">&copy; 2019 Newcastle University -- CSC8109 Group Project, Team 3</p>
             <ul class="list-inline">
                 <li class="list-inline-item"><a href="#">Privacy</a></li>
                 <li class="list-inline-item"><a href="#">Terms</a></li>
@@ -315,7 +340,7 @@
     <!-- Customized JS -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./js/config.js"></script>
-    <script src="./js/notifyTest.js"></script>
+    <!-- <script src="./js/notifyTest.js"></script> -->
     <script src="./js/upload.js"></script>
     <script src="./js/transactionDetail.js"></script>
 

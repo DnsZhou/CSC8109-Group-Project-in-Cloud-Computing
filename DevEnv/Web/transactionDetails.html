@@ -170,10 +170,13 @@
                             <tbody>
                                 <tr>
                                     <td>Evidence of Original(EOO)</td>
-                                    <td>
+                                    <td class=" senderAborted statusResolved statusOnGoing">
                                         <textarea id="eoo" style="width: 100%" disabled>
                                             Null
                                         </textarea>
+                                    </td>
+                                    <td class="hidden statusAborted recieverAborted">
+                                        Not Provided
                                     </td>
                                 </tr>
                                 <tr>
@@ -189,7 +192,7 @@
                                 </tr>
                                 <tr>
                                     <td>Document</td>
-                                    <td class="statusAborted recieverOnGoing recieverAborted statusOnGoing">
+                                    <td class="recieverOnGoing recieverAborted">
                                         Not Available
                                     </td>
                                     <td class="statusResolved senderOnGoing senderAborted hidden">
@@ -201,7 +204,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="statusOnGoing recieverOnGoing">
+                <div class="recieverOnGoing">
                     <form>
                         <h4 class="mb-3">EOR Signature</h4>
                         <label>EOR(Evidence Of Receipt) Signature</label>
@@ -241,12 +244,14 @@
 
                     </form>
                 </div>
-
                 <div class="senderOnGoing hidden">
                     <div class="mb-3 text-center">
                         <div class="alert alert-primary" role="alert">
                             Waiting for Reciever to confirm this exchange transaction
                         </div>
+                        <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" onclick="">
+                            Abort Transaction
+                        </button>
                     </div>
                 </div>
 

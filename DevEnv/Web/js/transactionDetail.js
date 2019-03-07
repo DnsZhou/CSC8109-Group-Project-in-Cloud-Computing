@@ -14,8 +14,8 @@ function hideAllComponent() {
     $(".statusOnGoing").addClass("hidden");
     $(".statusAborted").addClass("hidden");
     $(".senderOnGoing").addClass("hidden");
-    $(".recieverOnGoing").addClass("hidden");
     $(".senderAborted").addClass("hidden");
+    $(".recieverOnGoing").addClass("hidden");
     $(".recieverAborted").addClass("hidden");
 }
 
@@ -29,9 +29,12 @@ function testOnGoingTransaction() {
     testStatus = "onGoing";
     hideAllComponent();
     $(".statusOnGoing").removeClass("hidden")
-    if(testUser=="sender"){
+    if (testUser == "sender") {
         $(".senderOnGoing").removeClass("hidden")
         $(".recieverOnGoing").addClass("hidden")
+    } else {
+        $(".senderOnGoing").addClass("hidden")
+        $(".recieverOnGoing").removeClass("hidden")
     }
 }
 
@@ -39,24 +42,27 @@ function testAbortedTransaction() {
     testStatus = "aborted";
     hideAllComponent();
     $(".statusAborted").removeClass("hidden")
-    if(testUser=="sender"){
+    if (testUser == "sender") {
         $(".senderAborted").removeClass("hidden")
         $(".recieverAborted").addClass("hidden")
+    } else {
+        $(".senderAborted").addClass("hidden")
+        $(".recieverAborted").removeClass("hidden")
     }
 }
 
 function testSenderTransaction() {
     testUser = "sender";
-    switch(testStatus){
+    switch (testStatus) {
         case "onGoing": testOnGoingTransaction(); break;
         case "resolved": testResolvedTransaction(); break;
         case "aborted": testAbortedTransaction(); break;
     }
 }
 
-function testrecieverTransaction() {
+function testRecieverTransaction() {
     testUser = "reciever";
-    switch(testStatus){
+    switch (testStatus) {
         case "onGoing": testOnGoingTransaction(); break;
         case "resolved": testResolvedTransaction(); break;
         case "aborted": testAbortedTransaction(); break;
@@ -73,29 +79,29 @@ function testGetTransactionWithId() {
         .then(function (result) {
             refreshCurrentTransaction(result.data)
         }).catch(function (error) {
-            alert("Invalid Transaction Id, "+error)
+            alert("Invalid Transaction Id, " + error)
         });
 };
 
-function refreshCurrentTransaction(transactionData){
-    switch(transactionData.transactionState){
+function refreshCurrentTransaction(transactionData) {
+    switch (transactionData.transactionState) {
         case "OnGoing": testOnGoingTransaction(); break;
         case "Aborted": testAbortedTransaction(); break;
         case "Resolved": testResolvedTransaction(); break;
     }
-    if(currentUser.username == transactionData.sender){
+    if (currentUser.username == transactionData.sender) {
         testSenderTransaction();
-    }else if(currentUser.username == transactionData.receiver){
+    } else if (currentUser.username == transactionData.receiver) {
         testrecieverTransaction();
     }
     $("#transactionId").text(transactionData.transactionId);
     $("#createTime").text(transactionData.createTime);
     $("#sender").text(transactionData.sender);
     $("#senderEmail").text(transactionData.sender);
-    $("#senderEmail").attr("href","mailto: "+transactionData.sender);
+    $("#senderEmail").attr("href", "mailto: " + transactionData.sender);
     $("#reciever").text(transactionData.reciever);
     $("#recieverEmail").text(transactionData.reciever);
-    $("#recieverEmail").attr("href","mailto: "+transactionData.reciever);
+    $("#recieverEmail").attr("href", "mailto: " + transactionData.reciever);
     $("#eoo").text(transactionData.eoo);
     $("#eor").text(transactionData.eor);
     $("#documnetUri").attr("href", documnetUri)

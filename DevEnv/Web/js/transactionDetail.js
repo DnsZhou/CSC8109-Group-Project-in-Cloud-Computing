@@ -7,6 +7,7 @@ var apigClient = apigClientFactory.newClient({
 });
 
 $(document).ready(function () {
+    testGetTransactionWithId(getAllUrlParams(window.location.href).transactionId)
 });
 
 function hideAllComponent() {
@@ -69,8 +70,7 @@ function testRecieverTransaction() {
     }
 }
 
-function testGetTransactionWithId() {
-    var testTransactionId = $("#testTransactionId").val()
+function testGetTransactionWithId(testTransactionId) {
     var body = {
         jwtToken: jwtToken,
         transactionId: testTransactionId

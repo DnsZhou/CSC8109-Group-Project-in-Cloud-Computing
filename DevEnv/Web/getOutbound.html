@@ -1,5 +1,3 @@
-
-
 <!doctype html>
 <html lang="en">
 
@@ -30,15 +28,15 @@
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">New Exchange<span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="./index.html">New Exchange<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">Transactions</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="#">Inbound</a>
-                        <a class="dropdown-item" href="#">Outbound</a>
+                        <a class="dropdown-item" href="./getInbound.html">Inbound</a>
+                        <a class="dropdown-item" href="./getOutbound.html">Outbound</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -48,8 +46,7 @@
                     <a class="nav-link" href="#" onclick="logOut()">LogOut</a>
                 </li>
             </ul>
-            <ul class="form-inline my-2 my-lg-0 navbar-text">
-                CSC8109 Group Project -- Team 3
+            <ul id="userName" class="form-inline my-2 my-lg-0 navbar-text">
             </ul>
         </div>
     </nav>
@@ -57,26 +54,26 @@
     <main role="main" class="container">
         <div class="py-5 text-center">
             <table class="table table-striped" id="tb">
-              <tr>
-                  <th>TransactionID</th>
-                  <th>Sender</th>
-                  <th>Reciever</th>
-                  <th>Status</th>
-                  <!-- <th>state</th> -->
-                  <th>UpdateTime</th>
-                  <th>CreateTime</th>
+                <tr>
+                    <th>TransactionID</th>
+                    <th>Sender</th>
+                    <th>Reciever</th>
+                    <th>Status</th>
+                    <!-- <th>state</th> -->
+                    <th>UpdateTime</th>
+                    <th>CreateTime</th>
                 </tr>
-              </table>
-          </div>
+            </table>
+        </div>
     </main>
-    
+
     <script type="text/javascript">
 
-      var scanTransactionUrl = 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/getOutbound';
+        var scanTransactionUrl = 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/getOutbound';
 
 
-  
-        window.onload=function(){
+
+        window.onload = function () {
 
 
             var poolData = {
@@ -95,7 +92,7 @@
             splitArr.pop()
             // splitArr.splice(2,1)
 
-            splitArr.push(userEmail.username,'idToken')
+            splitArr.push(userEmail.username, 'idToken')
 
             jwtTokenKey = splitArr.join('.')
 
@@ -103,59 +100,59 @@
 
             console.log(jwtToken)
 
-          axios({
-            method: 'post',
-              url: scanTransactionUrl,
-              headers: {
-                'x-api-key': 'j9WCv0pgmEBMptwWR2pK83AKl2p51DC1hAWJXmqj'
-              },
-              data: {
-                jwt: JSON.stringify(jwtToken), //userEmail.username
-              }
-          }).then((result) => {
-            
-            console.log(result)
+            axios({
+                method: 'post',
+                url: scanTransactionUrl,
+                headers: {
+                    'x-api-key': 'j9WCv0pgmEBMptwWR2pK83AKl2p51DC1hAWJXmqj'
+                },
+                data: {
+                    jwt: JSON.stringify(jwtToken), //userEmail.username
+                }
+            }).then((result) => {
 
-              var data =JSON.parse(result.data.body);
-  
-              console.log(data);
-              
+                console.log(result)
+
+                var data = JSON.parse(result.data.body);
+
+                console.log(data);
+
                 // console.log(data[0].transactionState)
 
-              var arrData =[]
-              for(let i in data){
-                let userInfo = []
-                userInfo[0] = '<a href="./transactionDetails.html?transaction_id=' + data[i].transactionId + '">' +
-                    data[i].transactionId + '</a>';
-                userInfo[1] = data[i].sender;
-                userInfo[2] = data[i].reciever;
-                userInfo[3] = data[i].status;
-                // userInfo[4] = data[i].state;
-                userInfo[4] = data[i].updateTime;
-                userInfo[5] = data[i].createTime;
+                var arrData = []
+                for (let i in data) {
+                    let userInfo = []
+                    userInfo[0] = '<a href="./transactionDetails.html?transaction_id=' + data[i].transactionId + '">' +
+                        data[i].transactionId + '</a>';
+                    userInfo[1] = data[i].sender;
+                    userInfo[2] = data[i].reciever;
+                    userInfo[3] = data[i].status;
+                    // userInfo[4] = data[i].state;
+                    userInfo[4] = data[i].updateTime;
+                    userInfo[5] = data[i].createTime;
 
 
-                arrData.push(userInfo)
-              }
-              
-              console.log(arrData)
-
-  
-              for(var i=0;i < arrData.length;i++){
-  
-                var x=document.getElementById('tb').insertRow();
-                for(var j=0; j < arrData[i].length; j++){
-  
-                  var cell=x.insertCell();
-                  cell.innerHTML=arrData[i][j];
-                  }
+                    arrData.push(userInfo)
                 }
-  
-              })
-  
+
+                console.log(arrData)
+
+
+                for (var i = 0; i < arrData.length; i++) {
+
+                    var x = document.getElementById('tb').insertRow();
+                    for (var j = 0; j < arrData[i].length; j++) {
+
+                        var cell = x.insertCell();
+                        cell.innerHTML = arrData[i][j];
+                    }
+                }
+
+            })
+
         }
-  
-  
+
+
     </script>
 
     <!-- Optional JavaScript -->

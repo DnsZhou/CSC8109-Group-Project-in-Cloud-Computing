@@ -7,7 +7,7 @@ var apigClient = apigClientFactory.newClient({
 });
 
 $(document).ready(function () {
-    testGetTransactionWithId(getAllUrlParams(window.location.href).transactionId)
+    getTransaction();
 });
 
 function hideAllComponent() {
@@ -77,6 +77,7 @@ function testGetTransactionWithId(testTransactionId) {
     };
     apigClient.transactionGettransactiondetailsPost({}, body, {})
         .then(function (result) {
+            
             refreshCurrentTransaction(result.data)
         }).catch(function (error) {
             alert("Invalid Transaction Id, " + error)
@@ -105,4 +106,14 @@ function refreshCurrentTransaction(transactionData) {
     $("#eoo").text(transactionData.eoo);
     $("#eor").text(transactionData.eor);
     $("#documnetUri").attr("href", documnetUri)
+    showPage();
+}
+
+function getTransaction() {
+    testGetTransactionWithId(getAllUrlParams(window.location.href).transaction_id);
+}
+
+function showPage() {
+    $("#loadingPage").addClass("hidden");
+    $("#mainContent").removeClass("hidden");
 }

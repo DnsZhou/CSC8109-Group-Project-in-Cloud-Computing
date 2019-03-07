@@ -103,7 +103,6 @@ function getAllUsers() {
     apigClient.userGetallusersPost(params, body, additionalParams)
         .then(function (result) {
             // Add success callback code here.
-            console.log(result.data)
             result.data.forEach((user) => {
                 $("#selectEmail").append("<option value='" + user.email + "'>" + user.fullName + "(" + user.email + ")</option>")
             })

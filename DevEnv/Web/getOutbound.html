@@ -61,10 +61,10 @@
                   <th>TransactionID</th>
                   <th>Reciever</th>
                   <th>Sender</th>
-                  <th>status</th>
-                  <th>state</th>
-                  <th>updateTime</th>
-                  <th>createTime</th>
+                  <th>Status</th>
+                  <!-- <th>state</th> -->
+                  <th>UpdateTime</th>
+                  <th>CreateTime</th>
                 </tr>
               </table>
           </div>
@@ -123,13 +123,14 @@
               var arrData =[]
               for(let i in data){
                 let userInfo = []
-                userInfo[0] = data[i].transactionId;
+                userInfo[0] = '<a href="https://transactionDetails.html?transaction_id=' + data[i].transactionId + '">' +
+                    data[i].transactionId + '</a>';
                 userInfo[1] = data[i].reciever;
                 userInfo[2] = data[i].sender;
-                userInfo[3] = data[i].status;
-                userInfo[4] = data[i].state;
-                userInfo[5] = data[i].updateTime;
-                userInfo[6] = data[i].createTime;
+                userInfo[3] = data[i].transactionState;
+                // userInfo[4] = data[i].state;
+                userInfo[4] = data[i].updateTime;
+                userInfo[5] = data[i].createTime;
 
 
                 arrData.push(userInfo)

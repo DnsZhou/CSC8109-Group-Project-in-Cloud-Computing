@@ -71,6 +71,7 @@ function testRecieverTransaction() {
 }
 
 function testGetTransactionWithId(testTransactionId) {
+    verifyUserLogin();
     var body = {
         jwtToken: jwtToken,
         transactionId: testTransactionId

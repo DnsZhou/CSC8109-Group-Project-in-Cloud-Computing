@@ -77,7 +77,7 @@ function testGetTransactionWithId(testTransactionId) {
     };
     apigClient.transactionGettransactiondetailsPost({}, body, {})
         .then(function (result) {
-            
+
             refreshCurrentTransaction(result.data)
         }).catch(function (error) {
             alert("Invalid Transaction Id, " + error)
@@ -97,10 +97,8 @@ function refreshCurrentTransaction(transactionData) {
     }
     $("#transactionId").text(transactionData.transactionId);
     $("#createTime").text(transactionData.createTime);
-    $("#sender").text(transactionData.sender);
     $("#senderEmail").text(transactionData.sender);
     $("#senderEmail").attr("href", "mailto: " + transactionData.sender);
-    $("#reciever").text(transactionData.reciever);
     $("#recieverEmail").text(transactionData.reciever);
     $("#recieverEmail").attr("href", "mailto: " + transactionData.reciever);
     $("#eoo").text(transactionData.eoo);

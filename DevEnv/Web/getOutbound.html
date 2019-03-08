@@ -67,93 +67,14 @@
         </div>
     </main>
 
-    <script type="text/javascript">
-
-        var scanTransactionUrl = 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/getOutbound';
-
-
-
-        window.onload = function () {
-
-
-            var poolData = {
-                UserPoolId: _config.cognito.userPoolId,
-                ClientId: _config.cognito.userPoolClientId
-            };
-
-            var userPool;
-
-            userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-
-            userEmail = userPool.getCurrentUser();
-
-            var splitArr = userEmail.storage.key(userEmail.username).split('.')
-
-            splitArr.pop()
-            // splitArr.splice(2,1)
-
-            splitArr.push(userEmail.username, 'idToken')
-
-            jwtTokenKey = splitArr.join('.')
-
-            var jwtToken = localStorage.getItem(jwtTokenKey);
-
-            console.log(jwtToken)
-
-            axios({
-                method: 'post',
-                url: scanTransactionUrl,
-                headers: {
-                    'x-api-key': 'j9WCv0pgmEBMptwWR2pK83AKl2p51DC1hAWJXmqj'
-                },
-                data: {
-                    jwt: JSON.stringify(jwtToken), //userEmail.username
-                }
-            }).then((result) => {
-
-                console.log(result)
-
-                var data = JSON.parse(result.data.body);
-
-                console.log(data);
-
-                // console.log(data[0].transactionState)
-
-                var arrData = []
-                for (let i in data) {
-                    let userInfo = []
-                    userInfo[0] = '<a href="./transactionDetails.html?transaction_id=' + data[i].transactionId + '">' +
-                        data[i].transactionId + '</a>';
-                    userInfo[1] = data[i].sender;
-                    userInfo[2] = data[i].reciever;
-                    userInfo[3] = data[i].status;
-                    // userInfo[4] = data[i].state;
-                    userInfo[4] = data[i].updateTime;
-                    userInfo[5] = data[i].createTime;
-
-
-                    arrData.push(userInfo)
-                }
-
-                console.log(arrData)
-
-
-                for (var i = 0; i < arrData.length; i++) {
-
-                    var x = document.getElementById('tb').insertRow();
-                    for (var j = 0; j < arrData[i].length; j++) {
-
-                        var cell = x.insertCell();
-                        cell.innerHTML = arrData[i][j];
-                    }
-                }
-
-            })
-
-        }
-
-
-    </script>
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2019 Newcastle University -- CSC8109 Group Project, Team 3</p>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+    </footer>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -173,10 +94,26 @@
     <script src="./js/vendor/aws-cognito-sdk.min.js"></script>
     <script src="./js/vendor/amazon-cognito-identity.min.js"></script>
 
+    <!-- AWS API SDK -->
+    <script type="text/javascript" src="./js/lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="./js/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="./js/lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="./js/lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="./js/lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="./js/lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="./js/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="./js/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="./js/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="./js/lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="./js/apigClient.js"></script>
+
     <!-- Customized JS -->
     <script src="./js/config.js"></script>
     <script src="./js/notifyTest.js"></script>
-    <!-- <script src="./js/loginVerification.js"></script> -->
+    <script type="text/javascript" src="./js/getOutbound.js"></script>
+
+    <!-- User Login Verification and logout function, Uncomment below to activate it -->
+    <script src="./js/userOperation.js"></script>
 </body>
 
 </html>

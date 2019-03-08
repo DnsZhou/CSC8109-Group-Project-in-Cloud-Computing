@@ -191,7 +191,7 @@ this function will be executed automatically after the user registered
     - generate a new *private key* and *public key* and save it to the folder named with the *sub* in *jwt*.
     - create a new user in DB with following information:
         - email - String
-        ~~- sub - String, the uuid provided by Cognito to identify a single user~~
+        - ~~sub - String, the uuid provided by Cognito to identify a single user~~
         - fullName - String
     - query the database and get list of all users in {email: "email", fullName: "fullName"} format
 - #### return:

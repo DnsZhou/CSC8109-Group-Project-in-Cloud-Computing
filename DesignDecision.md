@@ -35,12 +35,12 @@
 - we use DynamoDB to store all the user information and store all transactions in this system.
 ### FesUser Table
 - email - Primary Key, String
-- sub - String, the uuid provided by *Cognito* to identify a single user
+- ~~sub - String, the uuid provided by *Cognito* to identify a single user~~
 - fullName - String
 - ~~?publicKey – String~~
 - ~~?privateKey – String~~
-- inboundTransactions - String - List of Inbound Transaction uuids related to this user
-- outboundTransactions - String - List of Outbound Transaction uuids related to this user
+- ~~inboundTransactions - String - List of Inbound Transaction uuids related to this user~~
+- ~~outboundTransactions - String - List of Outbound Transaction uuids related to this user~~
 
 
 

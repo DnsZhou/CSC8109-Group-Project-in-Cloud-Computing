@@ -4,7 +4,6 @@ $(document).ready(function () {
     })
 
     $('#confirmButton').on('click', ()=>{
-        console.log(111)
         confirm()
     })
 });

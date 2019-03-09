@@ -74,21 +74,20 @@
     - transactionId
     - the signature of EOO (AKA EOR)
 - #### process:
-    - decode the EOR with base64
     - get *sub* from *jwt*
     - get *Transaction* from DynamalDB by the *transactionId* that passed in
     - validate whether the *email* of the current user in jwt match with the reciever's email in the transaction
-    - generate the signature of the document
     - update a transaction in DynamalDB with *transactionId* provided, use following information:
-        - state: 4
-        - eor: EOR that passed in
-        - updateTime - Current time
     - call "**12. verifySignature**" function, pass in *jwt*, *transactionId* to it.
         - **if return true** 
             - update the transaction and mark the transactionState as *Resolved*
+            - update the updateTime with Current time
             - call **13. createSQSMessage** function, pass the transactionId to the function.
                 -the function will add a message to queue and at the end of the queue, it will move EOR from Reciver folder to Sender folder and move document from sender folder to reciver folder
-        - **if return false** update the transaction and mark the transactionState as Aborted add add message to remark field: *EOR* Signature not match with the *EOO* Signature
+        - **if return false** 
+            - update the transaction and mark the transactionState as Aborted 
+            - add message to remark field: *EOR* Signature not match with the *EOO* Signature
+            - update the updateTime with Current time
 - #### return:
     - whether transaction confirmed successfully or not
 
@@ -192,7 +191,7 @@ this function will be executed automatically after the user registered
     - generate a new *private key* and *public key* and save it to the folder named with the *sub* in *jwt*.
     - create a new user in DB with following information:
         - email - String
-        - sub - String, the uuid provided by Cognito to identify a single user
+        - ~~sub - String, the uuid provided by Cognito to identify a single user~~
         - fullName - String
     - query the database and get list of all users in {email: "email", fullName: "fullName"} format
 - #### return:

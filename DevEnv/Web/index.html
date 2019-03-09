@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
 
     <!-- Customized CSS -->
     <link rel="stylesheet" href="./css/FesMain.css">
@@ -30,11 +30,11 @@
                     <a class="nav-link" href="#">New Exchange<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Transactions</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">Transactions</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="#">Inbound</a>
-                        <a class="dropdown-item" href="#">Outbound</a>
+                        <a class="dropdown-item" href="./getInbound.html">Inbound</a>
+                        <a class="dropdown-item" href="./getOutbound.html">Outbound</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -71,13 +71,11 @@
                         <label>Document for exchange</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="inputGroupFile"
-                                    aria-describedby="inputGroupFileAddon">
+                                <input type="file" class="custom-file-input" id="inputGroupFile" aria-describedby="inputGroupFileAddon">
                                 <label class="custom-file-label" for="inputGroupFile">Choose file...</label>
                             </div>
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button"
-                                    id="inputGroupFileAddon04">Upload</button>
+                                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Upload</button>
                             </div>
                         </div>
                     </div>
@@ -88,9 +86,8 @@
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2">Generate</button>
                         </div>
-                        <input type="text" class="form-control"  id='inputEooDom'
-                            placeholder="Generate or override EOO Signature manually" aria-label="EOO Signature"
-                            aria-describedby="button-addon2">
+                        <input type="text" class="form-control" id='inputEooDom' placeholder="Generate or override EOO Signature manually"
+                            aria-label="EOO Signature" aria-describedby="button-addon2">
 
                     </div>
                     <div class="mb-3">
@@ -100,8 +97,7 @@
                         </div>
                     </div>
                     <hr class="mb-4">
-                    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal"
-                        data-target="#confirmModal">
+                    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#confirmModal">
                         Start Exchange
                     </button>
                 </form>
@@ -163,14 +159,11 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <!-- Bootstrap Notify -->
     <script src="http://bootstrap-notify.remabledesigns.com/js/bootstrap-notify.min.js"></script>
@@ -197,10 +190,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js"></script>
     <script src="./js/config.js"></script>
     <script src="./js/notifyTest.js"></script>
-    <script src="./js/upload.js"></script>
 
     <!-- User Login Verification and logout function, Uncomment below to activate it -->
     <script src="./js/userOperation.js"></script>
+    <script src="./js/upload.js"></script>
 </body>
 
 </html>

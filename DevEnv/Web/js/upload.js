@@ -1,12 +1,20 @@
-// var uploadClient = apigClientFactory.newClient({
-//     apiKey: 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
-// });
-
 var loc = ''
 var locKey = false
 var eoo = ''
 var eooKey = false
 var generateEOOUrl = 'https://e0sjfe7hvb.execute-api.us-east-2.amazonaws.com/prod/ReturnandSaveEOO'
+
+$(document).ready(function () {
+    $('#inputGroupFileAddon04').on('click', () => {
+        upload()
+    })
+    $('#button-addon2').on('click', () => {
+        generateEOO()
+    })
+    $('#startTransaction').on('click', () => {
+        startExchange()
+    })
+});
 
 
 function upload() {
@@ -25,24 +33,6 @@ function upload() {
 
     console.log(fileChooser.prop('files')[0])
     uploadFile = fileChooser.prop('files')[0]
-
-    var params = {
-        // This is where any modeled request parameters should be added.
-        // The key is the parameter name, as it is defined in the API in API Gateway.
-        // param1: ''
-    };
-
-    // var body = {
-    //     jwtToken: jwtToken,
-    //     filename: fileName
-    // };
-
-    var additionalParams = {
-        // If there are any unmodeled query parameters or headers that must be
-        //   sent with the request, add them here.
-        headers: {},
-        queryParams: {}
-    };
 
     axios({
         method: 'post',

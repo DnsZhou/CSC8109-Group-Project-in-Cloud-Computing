@@ -8,15 +8,6 @@ var apigClient = apigClientFactory.newClient({
 window.onload = function () {
     verifyUserLogin();
     getAllUsers();
-    $('#inputGroupFileAddon04').on('click', () => {
-        upload()
-    })
-    $('#button-addon2').on('click', () => {
-        generateEOO()
-    })
-    $('#startTransaction').on('click', () => {
-        startExchange()
-    })
 }
 
 $(document).ready(function () {

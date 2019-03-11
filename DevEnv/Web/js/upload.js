@@ -23,6 +23,7 @@ $(document).ready(function () {
 function upload() {
     var fileChooser = $('#inputGroupFile')
     var receiverSelector = $('#selectEmail')
+    var signedUrl = ''
 
     if (!receiverSelector.val()) {
         alert('Please choose a user')
@@ -39,17 +40,16 @@ function upload() {
 
     axios({
         method: 'post',
-        url: 'https://qnjstbq3od.execute-api.us-east-2.amazonaws.com/one/stepone',
+        url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/document/upload',
         headers: {
-            'x-api-key': 'bkDIzz0lVX9nukr7qf7sM6yPe2C1oNnracaDMspW'
+            'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
         },
         data: {
             jwtToken: jwtToken,
             filename: uploadFile.name,
         }
     }).then((result) => {
-        var signedUrl = result.data;
-        signedUrl = signedUrl.url
+        signedUrl = result.data.body;
         console.log(signedUrl)
 
         var options = {
@@ -116,6 +116,8 @@ function startExchange() {
     closeButton = $('.close')
     status = 'OnGoing'
     let transactionId = uuid()
+    $('#docName').text(loc)
+    $('#recieverName').text($('#selectEmail').val())
 
     axios({
         method: 'post',

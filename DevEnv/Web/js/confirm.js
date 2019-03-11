@@ -80,7 +80,7 @@ function confirm() {
                         console.log(result.status)
                         if (result.status == 200){
                             alert('confirm sucess')
-                            window.location.href = './index.html'
+                            location.reload();
                         } else if (result.status == 505) {
                             alert(result.data.body)
                         }
@@ -121,7 +121,7 @@ function abort() {
     }).then((result) => {
         console.log(result)
         alert(result.data.body)
-        window.location.href = './index.html'
+        location.reload();
     }).catch(function (error) {
         alert('network error')
     })

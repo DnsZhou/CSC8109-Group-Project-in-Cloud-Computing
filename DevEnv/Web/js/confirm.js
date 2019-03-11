@@ -3,8 +3,12 @@ $(document).ready(function () {
         generateEOR()
     })
 
-    $('#confirmButton').on('click', ()=>{
+    $('#confirmButton').on('click', () => {
         confirm()
+    })
+
+    $('#abortButton').on('click', () => {
+        abort()
     })
 });
 
@@ -46,62 +50,78 @@ function confirm() {
         method: 'post',
         url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/transaction/checkreciever',
         headers: {
-            'x-api-key': 'aKMk5FuMXo8gA3etY97xh5SOhVSILTVb9UuHS5Wy'
+            'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
         },
         data: {
             jwt_reciever: jwtToken,
             transaction_id: transactionId,
         }
     }).then((result) => {
-        if(result.data){
+        if (result.data) {
             VerifyEOR(jwtToken, transactionId, userEor)
-                .then((data)=>{
-                    // if (data.data){
-
-                    // }else{
-                    //     alert('receiver email not match')
-                    //     closeButton.trigger('click')
-                    // }
-                    confirmTransaction(jwtToken, transactionId, data.data)
-                        .then((res)=>{
-                            console.log(res)
-                        })
-                        .catch((error)=>{
-                            console.log(error)
-                        })
+                .then((data) => {
+                    console.log(data.data)
+                    eor_result = data.data
+                    axios({
+                        method: 'post',
+                        url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/transaction/confirm',
+                        headers: {
+                            'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+                        },
+                        data: {
+                            jwt: jwtToken,
+                            transaction_id: transactionId,
+                            eor_result: eor_result
+                        }
+                    }).then((result) => {
+                        console.log(result.status)
+                        if (result.status == 200){
+                            alert('confirm sucess')
+                            window.location.href = './index.html'
+                        } else if (result.status == 505) {
+                            alert(result.data.body)
+                        }
+                    }).catch(function (error) {
+                        alert('Network error')
+                        closeButton.trigger('click')
+                    })
                 })
-                .catch((err)=>{
+                .catch((err) => {
                     console.log(err)
+                    alert('Network error')
+                    closeButton.trigger('click')
                 })
-        }else{
+        } else {
             closeButton.trigger('click')
             alert('receiver email not match')
         }
-        
+
     }).catch(function (error) {
         alert('network error')
         closeButton.trigger('click')
     })
+}
 
-    // userEor = document.getElementById("inputEorDom").value
-    // transactionId = getAllUrlParams(window.location.href).transaction_id
+function abort() {
+    transactionId = getAllUrlParams(window.location.href).transaction_id
 
-    // axios({
-    //     method: 'post',
-    //     url: 'https://e0sjfe7hvb.execute-api.us-east-2.amazonaws.com/prod/VerifyEOR',
-    //     headers: {
-    //         'x-api-key': 'aKMk5FuMXo8gA3etY97xh5SOhVSILTVb9UuHS5Wy'
-    //     },
-    //     data: {
-    //         jwt_reciever: jwtToken,
-    //         transaction_id: transactionId,
-    //         signatureReciever_base64: userEor
-    //     }
-    // }).then((result) => {
-    //     console.log(result)
-    // }).catch(function (error) {s
-    //     console.log(error)
-    // })
+    axios({
+        method: 'post',
+        url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/transaction/abort',
+        headers: {
+            'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+        },
+        data: {
+            jwt: jwtToken,
+            id: transactionId,
+        }
+    }).then((result) => {
+        console.log(result)
+        alert(result.data.body)
+        window.location.href = './index.html'
+    }).catch(function (error) {
+        alert('network error')
+    })
 }
 
 let VerifyEOR = (jwtToken, transactionId, userEor) =>
@@ -142,5 +162,5 @@ let confirmTransaction = (jwtToken, transactionId, eor_result) => {
         }).catch(function (error) {
             reject(error)
         })
-    }
+    })
 }

@@ -245,6 +245,186 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.retrieveURLPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var retrieveURLPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/retrieveURL').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(retrieveURLPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.retrieveURLOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var retrieveURLOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/retrieveURL').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(retrieveURLOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.transactionAbortPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var transactionAbortPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/transaction/abort').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(transactionAbortPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.transactionAbortOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var transactionAbortOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/transaction/abort').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(transactionAbortOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.transactionCheckrecieverPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var transactionCheckrecieverPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/transaction/checkreciever').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(transactionCheckrecieverPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.transactionCheckrecieverOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var transactionCheckrecieverOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/transaction/checkreciever').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(transactionCheckrecieverOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.transactionConfirmPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var transactionConfirmPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/transaction/confirm').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(transactionConfirmPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.transactionConfirmOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var transactionConfirmOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/transaction/confirm').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(transactionConfirmOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.transactionGetsendersubPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var transactionGetsendersubPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/transaction/getsendersub').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(transactionGetsendersubPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.transactionGetsendersubOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var transactionGetsendersubOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/transaction/getsendersub').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(transactionGetsendersubOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.transactionGettransactiondetailsPost = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -495,7 +675,7 @@ apigClientFactory.newClient = function (config) {
         
         return apiGatewayClient.makeRequest(userLoginOptionsRequest, authType, additionalParams, config.apiKey);
     };
-    
+        
     apigClient.docUploadDocument = function (params, body, additionalParams) {
         if (additionalParams === undefined) {
             additionalParams = {};

@@ -78,7 +78,6 @@ function testGetTransactionWithId(testTransactionId) {
     };
     apigClient.transactionGettransactiondetailsPost({}, body, {})
         .then(function (result) {
-
             refreshCurrentTransaction(result.data)
         }).catch(function (error) {
             alert("Invalid Transaction Id, " + error)
@@ -86,16 +85,45 @@ function testGetTransactionWithId(testTransactionId) {
 };
 
 function refreshCurrentTransaction(transactionData) {
+    var caseOnGoing = false;
+    var body = {
+        jwt: jwtToken,
+        transaction_id: transactionData.transactionId
+    };
+
     switch (transactionData.transactionState) {
-        case "OnGoing": testOnGoingTransaction(); break;
+        case "OnGoing": testOnGoingTransaction(); caseOnGoing = true; break;
         case "Aborted": testAbortedTransaction(); break;
         case "Resolved": testResolvedTransaction(); break;
     }
     if (currentUser.username == transactionData.sender) {
-        testSenderTransaction();
+        apigClient.retrieveURLPost({}, body, {}).then(function (docUrl) {
+            transactionData.documentUrl = docUrl.data;
+            testSenderTransaction();
+            showPage(transactionData);
+        })
+
     } else if (currentUser.username == transactionData.receiver) {
-        testRecieverTransaction();
+        if (caseOnGoing) {
+            apigClient.retrieveURLPost({}, body, {}).then(function (docUrl) {
+                transactionData.documentUrl = docUrl.data;
+                testSenderTransaction();
+                showPage();
+            })
+        } else {
+            testSenderTransaction();
+            showPage();
+        }
+    } else {
+        alert("Currenr user is not authorized to view this transaction.")
     }
+}
+
+function getTransaction() {
+    testGetTransactionWithId(getAllUrlParams(window.location.href).transaction_id);
+}
+
+function showPage(transactionData) {
     $("#transactionId").text(transactionData.transactionId);
     $("#createTime").text(transactionData.createTime);
     $("#senderEmail").text(transactionData.sender);
@@ -104,15 +132,8 @@ function refreshCurrentTransaction(transactionData) {
     $("#recieverEmail").attr("href", "mailto: " + transactionData.reciever);
     $("#eoo").text(transactionData.eoo);
     $("#eor").text(transactionData.eor);
-    $("#documnetUri").attr("href", documnetUri)
-    showPage();
-}
-
-function getTransaction() {
-    testGetTransactionWithId(getAllUrlParams(window.location.href).transaction_id);
-}
-
-function showPage() {
+    $("#documnetUri").attr("href", transactionData.documentUrl)
+    $("#documnetUri").attr("target", "_blank")
     $("#loadingPage").addClass("hidden");
     $("#mainContent").removeClass("hidden");
 }
@@ -123,11 +144,11 @@ async function delayProcess() {
         setTimeout(function () {
             $("#progressBar").attr("aria-valuenow", percentage);
             $("#progressBar").css("width", percentage + "%");
-            if(percentage > 99){
+            if (percentage > 99) {
                 setTimeout(function () {
                     $("#progressDone").removeClass("hidden");
                     $("#onProgress").addClass("hidden");
-                },1000)
+                }, 1000)
             }
         }, 1000);
 

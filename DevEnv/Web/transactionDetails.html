@@ -53,36 +53,38 @@
     </nav>
 
     <main role="main" class="container">
-        <div class="row" id="testButtons">
-            <div class="col-md-1">
-                <p>Test</p>
-            </div>
-            <div class="col-md-3">
-                <div class="btn-group btn-group-sm" role="group" aria-label="test button">
-                    <button type="button" class="btn btn-secondary"
-                        onclick="testResolvedTransaction()">Resolved</button>
-                    <button type="button" class="btn btn-secondary" onclick="testOnGoingTransaction()">OnGoing</button>
-                    <button type="button" class="btn btn-secondary" onclick="testAbortedTransaction()">Aborted</button>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="btn-group btn-group-sm" role="group" aria-label="test button">
-                    <button type="button" class="btn btn-secondary" onclick="testSenderTransaction()">Sender</button>
-                    <button type="button" class="btn btn-secondary"
-                        onclick="testRecieverTransaction()">Reciever</button>
-                </div>
-            </div>
-            <div class="col-md-4 btn-group btn-group-sm" role="group" aria-label="test button">
-                <input id="testTransactionId" type="text" class="form-control" placeholder="input test Transaction Id"
-                    value="0e1580b6-2f74-4dff-ba8f-40837ebbd8d9">
-            </div>
-            <div class="col-md-2">
-                <div class="btn-group btn-group-sm" role="group" aria-label="test button">
-                    <button type="button" class="btn btn-secondary" onclick="testGetTransactionWithId()">test Get
-                    </button>
-                </div>
-            </div>
-        </div>
+        <!-- TEST Button Start --- WARNING - not for production environment!!! -->
+        <!-- <div class="row" id="testButtons">
+                    <div class="col-md-1">
+                        <p>Test</p>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="test button">
+                            <button type="button" class="btn btn-secondary"
+                                onclick="testResolvedTransaction()">Resolved</button>
+                            <button type="button" class="btn btn-secondary" onclick="testOnGoingTransaction()">OnGoing</button>
+                            <button type="button" class="btn btn-secondary" onclick="testAbortedTransaction()">Aborted</button>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="test button">
+                            <button type="button" class="btn btn-secondary" onclick="testSenderTransaction()">Sender</button>
+                            <button type="button" class="btn btn-secondary"
+                                onclick="testRecieverTransaction()">Reciever</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 btn-group btn-group-sm" role="group" aria-label="test button">
+                        <input id="testTransactionId" type="text" class="form-control" placeholder="input test Transaction Id"
+                            value="0e1580b6-2f74-4dff-ba8f-40837ebbd8d9">
+                    </div>
+                    <div class="col-md-2">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="test button">
+                            <button type="button" class="btn btn-secondary" onclick="testGetTransactionWithId()">test Get
+                            </button>
+                        </div>
+                    </div>
+                </div> -->
+        <!-- TEST Button End --- WARNING - not for production environment!!! -->
 
         <div class="py-5 text-center">
             <h2>Exchange Transaction Details</h2>

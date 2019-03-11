@@ -14,6 +14,9 @@ $(document).ready(function () {
     $('#startTransaction').on('click', () => {
         startExchange()
     })
+    $('#inputGroupFile').change(function () {
+        $(this).next('label').text($(this).val());
+    })
 });
 
 
@@ -155,7 +158,7 @@ function startExchange() {
                     loc = ''
                     locKey = false
                     eooKey = false
-                    closeButton.trigger('click')
+                    window.location.href = './getOutbound.html'
                 })
                 .catch((err) => {
                     closeButton.trigger('click')

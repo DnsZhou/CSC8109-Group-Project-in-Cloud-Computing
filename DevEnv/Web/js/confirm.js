@@ -10,6 +10,9 @@ $(document).ready(function () {
     $('#abortButton').on('click', () => {
         abort()
     })
+    $('#abortButton2').on('click', () => {
+        abort()
+    })
 });
 
 eorKey = false

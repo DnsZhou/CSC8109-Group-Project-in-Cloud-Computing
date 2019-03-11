@@ -74,26 +74,11 @@ function verifyUserLogin() {
 }
 
 function getAllUsers() {
-    var params = {
-        // This is where any modeled request parameters should be added.
-        // The key is the parameter name, as it is defined in the API in API Gateway.
-        // param1: ''
-    };
-
     var body = {
         jwtToken: jwtToken
     };
-
-    var additionalParams = {
-        // If there are any unmodeled query parameters or headers that must be
-        //   sent with the request, add them here.
-        headers: {},
-        queryParams: {}
-    };
-
-    apigClient.userGetallusersPost(params, body, additionalParams)
+    apigClient.userGetallusersPost({}, body, {})
         .then(function (result) {
-            // Add success callback code here.
             result.data.forEach((user) => {
                 $("#selectEmail").append("<option value='" + user.email + "'>" + user.fullName + "(" + user.email + ")</option>")
             })

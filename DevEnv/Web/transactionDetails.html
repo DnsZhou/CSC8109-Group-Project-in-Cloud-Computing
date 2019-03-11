@@ -41,13 +41,19 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="logOut()">LogOut</a>
+                    <a class="nav-link"
+                        href="https://github.com/DnsZhou/CSC8109-Group-Project-in-Cloud-Computing/blob/master/README.md">About</a>
                 </li>
             </ul>
-            <ul id="userName" class="form-inline my-2 my-lg-0 navbar-text">
+
+            <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="true" aria-expanded="false" id="userName"></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" onclick="logOut()" href="./login.html">LogOut</a>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>

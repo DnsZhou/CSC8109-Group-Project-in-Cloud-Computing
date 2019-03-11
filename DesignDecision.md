@@ -1,5 +1,6 @@
 # Design Decision for Group Project CSC8109
 ## High Level Overall Architecture:
+- S3 as the file storage component, including Document(Contract), EOO, EOR and Private key, Public key.
 - Serverless architecture utilising Lambda functions
 - TTP – encompassing S3 and Lambda logic to control the flow of messages. Usage of DynamoDB to keep track of state of message
 
@@ -10,10 +11,17 @@
 
 
 ## Users
-
-- Basic Authentication
+- Use **Sub**  as universal unique identity in the system.
+- API level Authentication with JWT provided by Cognito service
 - Personalized Page for each user (Show’s messages that they have received)
 
+
+## File Storage Service with S3
+S3 is used to provide 2 services:
+- 1. Encrypted file storage system
+    - Every user will have a individual folder with the name of user Sub, and all transactions will have its own sub folder named with the transaction id.
+    - All common lambda functions only have the access to the folder that belong to the user passed from jwt, and file transferation can only be conducted by TTP functions through SQS system.
+- 2. Static website hosting for html pages
 
 ## Lambda Architecture:
 

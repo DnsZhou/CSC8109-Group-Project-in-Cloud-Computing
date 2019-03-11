@@ -105,6 +105,7 @@ function refreshCurrentTransaction(transactionData) {
     $("#eoo").text(transactionData.eoo);
     $("#eor").text(transactionData.eor);
     $("#documnetUri").attr("href", documnetUri)
+    $('#recieverName').text(transactionData.reciever)
     showPage();
 }
 

@@ -150,7 +150,7 @@ function startExchange() {
             if (result.data) {
                 status = 'OnGoing'
             } else {
-                status = 'Abort'
+                status = 'Aborted'
             }
             moveObject(transactionId, status, userEoo, $('#selectEmail').val())
                 .then((data) => {

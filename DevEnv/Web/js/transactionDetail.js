@@ -5,6 +5,8 @@ var testUser = "reciever";
 var apigClient = apigClientFactory.newClient({
     apiKey: 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
 });
+var getTransactionInterval = null;
+var getUrlInterval = null;
 
 $(document).ready(function () {
     getTransaction();
@@ -78,7 +80,10 @@ function testGetTransactionWithId(testTransactionId) {
     };
     apigClient.transactionGettransactiondetailsPost({}, body, {})
         .then(function (result) {
-            refreshCurrentTransaction(result.data)
+            if (!(!result.data.eor && result.data.transactionState == "Resolved") && !(!result.data.eoo && result.data.transactionState == "OnGoing")) {
+                clearInterval(getTransactionInterval)
+                refreshCurrentTransaction(result.data);
+            }
         }).catch(function (error) {
             alert("Invalid Transaction Id, " + error)
         });
@@ -86,10 +91,6 @@ function testGetTransactionWithId(testTransactionId) {
 
 function refreshCurrentTransaction(transactionData) {
     var caseResolved = false;
-    var body = {
-        jwt: jwtToken,
-        transaction_id: transactionData.transactionId
-    };
 
     switch (transactionData.transactionState) {
         case "OnGoing": testOnGoingTransaction(); caseResolved = false; break;
@@ -97,19 +98,10 @@ function refreshCurrentTransaction(transactionData) {
         case "Resolved": testResolvedTransaction(); caseResolved = true; break;
     }
     if (currentUser.username == transactionData.sender) {
-        apigClient.retrieveURLPost({}, body, {}).then(function (docUrl) {
-            transactionData.documentUrl = docUrl.data;
-            testSenderTransaction();
-            showPage(transactionData);
-        })
-
+        getUrl(transactionData);
     } else if (currentUser.username == transactionData.reciever) {
         if (caseResolved) {
-            apigClient.retrieveURLPost({}, body, {}).then(function (docUrl) {
-                transactionData.documentUrl = docUrl.data;
-                testRecieverTransaction();
-                showPage(transactionData);
-            })
+            getUrl(transactionData);
         } else {
             testRecieverTransaction();
             showPage(transactionData);
@@ -120,7 +112,28 @@ function refreshCurrentTransaction(transactionData) {
 }
 
 function getTransaction() {
-    testGetTransactionWithId(getAllUrlParams(window.location.href).transaction_id);
+    getTransactionInterval = setInterval(function () {
+        testGetTransactionWithId(getAllUrlParams(window.location.href).transaction_id)
+    }, 3000);
+}
+
+function getUrl(transactionData) {
+    getUrlInterval = setInterval(function () {
+        var body = {
+            jwt: jwtToken,
+            transaction_id: transactionData.transactionId
+        };
+
+        apigClient.retrieveURLPost({}, body, {}).then(function (docUrl) {
+            if (docUrl.data) {
+                transactionData.documentUrl = docUrl.data;
+                testSenderTransaction();
+                showPage(transactionData);
+                clearInterval(getUrlInterval);
+                urlLoading = false;
+            }
+        })
+    }, 3000);
 }
 
 function showPage(transactionData) {

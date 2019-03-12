@@ -151,21 +151,3 @@ function showPage(transactionData) {
     $("#mainContent").removeClass("hidden");
     $("#recieverName").text(transactionData.sender);
 }
-
-async function delayProcess() {
-    for (var percentage = 0; percentage <= 100; percentage++) {
-
-        setTimeout(function () {
-            $("#progressBar").attr("aria-valuenow", percentage);
-            $("#progressBar").css("width", percentage + "%");
-            if (percentage > 99) {
-                setTimeout(function () {
-                    $("#progressDone").removeClass("hidden");
-                    $("#onProgress").addClass("hidden");
-                }, 1000)
-            }
-        }, 1000);
-
-    }
-
-}

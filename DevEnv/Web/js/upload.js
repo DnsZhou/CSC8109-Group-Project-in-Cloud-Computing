@@ -110,6 +110,7 @@ function startExchange() {
 
     if (!eooKey) {
         alert('Please generate an eoo first')
+        return
     }
 
     userEoo = document.getElementById("inputEooDom").value
@@ -150,7 +151,7 @@ function startExchange() {
             if (result.data) {
                 status = 'OnGoing'
             } else {
-                status = 'Abort'
+                status = 'Aborted'
             }
             moveObject(transactionId, status, userEoo, $('#selectEmail').val())
                 .then((data) => {

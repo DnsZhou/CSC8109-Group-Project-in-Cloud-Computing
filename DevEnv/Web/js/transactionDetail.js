@@ -85,16 +85,16 @@ function testGetTransactionWithId(testTransactionId) {
 };
 
 function refreshCurrentTransaction(transactionData) {
-    var caseOnGoing = false;
+    var caseResolved = false;
     var body = {
         jwt: jwtToken,
         transaction_id: transactionData.transactionId
     };
 
     switch (transactionData.transactionState) {
-        case "OnGoing": testOnGoingTransaction(); caseOnGoing = true; break;
-        case "Aborted": testAbortedTransaction(); break;
-        case "Resolved": testResolvedTransaction(); break;
+        case "OnGoing": testOnGoingTransaction(); caseResolved = false; break;
+        case "Aborted": testAbortedTransaction(); caseResolved = false; break;
+        case "Resolved": testResolvedTransaction(); caseResolved = true; break;
     }
     if (currentUser.username == transactionData.sender) {
         apigClient.retrieveURLPost({}, body, {}).then(function (docUrl) {
@@ -103,16 +103,16 @@ function refreshCurrentTransaction(transactionData) {
             showPage(transactionData);
         })
 
-    } else if (currentUser.username == transactionData.receiver) {
-        if (caseOnGoing) {
+    } else if (currentUser.username == transactionData.reciever) {
+        if (caseResolved) {
             apigClient.retrieveURLPost({}, body, {}).then(function (docUrl) {
                 transactionData.documentUrl = docUrl.data;
-                testSenderTransaction();
-                showPage();
+                testRecieverTransaction();
+                showPage(transactionData);
             })
         } else {
-            testSenderTransaction();
-            showPage();
+            testRecieverTransaction();
+            showPage(transactionData);
         }
     } else {
         alert("Currenr user is not authorized to view this transaction.")

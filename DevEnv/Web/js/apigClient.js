@@ -461,6 +461,42 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.transactionGetunreadinboundPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var transactionGetunreadinboundPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/transaction/getunreadinbound').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(transactionGetunreadinboundPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.transactionGetunreadinboundOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var transactionGetunreadinboundOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/transaction/getunreadinbound').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(transactionGetunreadinboundOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.transactionStartPost = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -675,7 +711,7 @@ apigClientFactory.newClient = function (config) {
         
         return apiGatewayClient.makeRequest(userLoginOptionsRequest, authType, additionalParams, config.apiKey);
     };
-        
+    
     apigClient.docUploadDocument = function (params, body, additionalParams) {
         if (additionalParams === undefined) {
             additionalParams = {};

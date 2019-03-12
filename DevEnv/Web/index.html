@@ -78,7 +78,8 @@
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="inputGroupFile"
                                     aria-describedby="inputGroupFileAddon">
-                                <label class="custom-file-label" for="inputGroupFile">Choose file...</label>
+                                <label id="fileLocation" class="custom-file-label" for="inputGroupFile">Choose
+                                    file...</label>
                             </div>
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button"
@@ -106,7 +107,7 @@
                     </div>
                     <hr class="mb-4">
                     <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal"
-                        data-target="#confirmModal">
+                        onclick="refreshStartModal()" data-target="#confirmModal">
                         Start Exchange
                     </button>
                 </form>
@@ -137,9 +138,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        Do you confirm to start an exchange Transaction to <b id="recieverName">Pual Anyone</b> with
-                        document
-                        <b id="docName">contract1.doc</b>?
+                        Do you confirm to start a new exchange Transaction to <b id="recieverName"></b> with
+                        document <b id="docName"></b>?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

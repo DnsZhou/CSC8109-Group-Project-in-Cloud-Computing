@@ -136,6 +136,7 @@ function showPage(transactionData) {
     $("#documnetUri").attr("target", "_blank")
     $("#loadingPage").addClass("hidden");
     $("#mainContent").removeClass("hidden");
+    $("#recieverName").text(transactionData.sender);
 }
 
 async function delayProcess() {

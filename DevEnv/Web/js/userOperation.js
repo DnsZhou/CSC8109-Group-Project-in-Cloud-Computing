@@ -86,3 +86,8 @@ function getAllUsers() {
             // Add error callback code here.
         });
 }
+
+function refreshStartModal(){
+    $("#recieverName").text($("#selectEmail").val());
+    $("#docName").text($("#fileLocation").text());
+}

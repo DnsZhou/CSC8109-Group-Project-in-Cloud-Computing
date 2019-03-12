@@ -110,6 +110,7 @@ function startExchange() {
 
     if (!eooKey) {
         alert('Please generate an eoo first')
+        return
     }
 
     userEoo = document.getElementById("inputEooDom").value

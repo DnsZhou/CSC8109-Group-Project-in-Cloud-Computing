@@ -44,6 +44,7 @@ function generateEOR() {
 function confirm() {
     if (!eorKey) {
         alert('Please generate an eoo first')
+        returns
     }
     transactionId = getAllUrlParams(window.location.href).transaction_id
     userEor = document.getElementById("inputEorDom").value

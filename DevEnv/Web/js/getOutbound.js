@@ -31,7 +31,7 @@ $(document).ready(function () {
         method: 'post',
         url: scanTransactionUrl,
         headers: {
-            'x-api-key': 'j9WCv0pgmEBMptwWR2pK83AKl2p51DC1hAWJXmqj'
+            'Authorization': jwtToken
         },
         data: {
             jwt: JSON.stringify(jwtToken), //userEmail.username

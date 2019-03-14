@@ -5,7 +5,7 @@ CSC8109 Group Project in Cloud Computing - Group3
 
 This is a group project conducted by students in Newcastle University Computing School.
 
-[Click Here](http://fes-web.s3-website.eu-west-2.amazonaws.com/) to view our system on AWS.
+[Click Here](https://d345shlzrfj06l.cloudfront.net/) to view our system on AWS.
 
 ## List of Documents:
 

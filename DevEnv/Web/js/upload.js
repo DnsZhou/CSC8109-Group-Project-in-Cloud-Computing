@@ -2,7 +2,7 @@ var loc = ''
 var locKey = false
 var eoo = ''
 var eooKey = false
-var generateEOOUrl = 'https://e0sjfe7hvb.execute-api.us-east-2.amazonaws.com/prod/ReturnandSaveEOO'
+var generateEOOUrl = 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/ReturnandSaveEOO'
 
 $(document).ready(function () {
     $('#inputGroupFileAddon04').on('click', () => {
@@ -42,7 +42,7 @@ function upload() {
         method: 'post',
         url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/document/upload',
         headers: {
-            'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+            'Authorization': jwtToken
         },
         data: {
             jwtToken: jwtToken,
@@ -85,7 +85,7 @@ function generateEOO() {
         method: 'post',
         url: generateEOOUrl,
         headers: {
-            'x-api-key': 'aKMk5FuMXo8gA3etY97xh5SOhVSILTVb9UuHS5Wy'
+            'Authorization': jwtToken
         },
         data: {
             jwt: jwtToken,
@@ -103,18 +103,20 @@ function generateEOO() {
 }
 
 function startExchange() {
+    closeButton = $('.close')
     if (!locKey) {
         alert('Please upload a file first')
+        closeButton.trigger('click')
         return
     }
 
     if (!eooKey) {
         alert('Please generate an eoo first')
+        closeButton.trigger('click')
         return
     }
 
     userEoo = document.getElementById("inputEooDom").value
-    closeButton = $('.close')
     status = 'OnGoing'
     let transactionId = uuid()
     $('#docName').text(loc)
@@ -124,7 +126,7 @@ function startExchange() {
         method: 'post',
         url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/transaction/start',
         headers: {
-            'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+            'Authorization': jwtToken
         },
         data: {
             to: $('#selectEmail').val(),
@@ -138,9 +140,9 @@ function startExchange() {
         // alert('transaction success')
         axios({
             method: 'post',
-            url: 'https://e0sjfe7hvb.execute-api.us-east-2.amazonaws.com/prod/verifyEOO',
+            url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/VerifyEOO',
             headers: {
-                'x-api-key': 'aKMk5FuMXo8gA3etY97xh5SOhVSILTVb9UuHS5Wy'
+                'Authorization': jwtToken
             },
             data: {
                 jwt: jwtToken,
@@ -186,7 +188,7 @@ let moveObject = (id, status, eoo, receiver) =>
             method: 'post',
             url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/document/move',
             headers: {
-                'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+                'Authorization': jwtToken
             },
             data: {
                 id: id,

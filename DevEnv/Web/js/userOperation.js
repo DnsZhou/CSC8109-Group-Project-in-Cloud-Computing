@@ -87,7 +87,7 @@ function getAllUsers() {
         });
 }
 
-function refreshStartModal() {
+function refreshStartModal(){
     $("#recieverName").text($("#selectEmail").val());
     $("#docName").text($("#fileLocation").text());
 }

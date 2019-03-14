@@ -21,9 +21,9 @@ function generateEOR() {
 
     axios({
         method: 'post',
-        url: 'https://e0sjfe7hvb.execute-api.us-east-2.amazonaws.com/prod/ReturnAndSaveEOR',
+        url: "https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/ReturnAndSaveEOR",
         headers: {
-            'x-api-key': 'aKMk5FuMXo8gA3etY97xh5SOhVSILTVb9UuHS5Wy'
+            'Authorization': jwtToken
         },
         data: {
             transaction_id: getAllUrlParams(window.location.href).transaction_id,
@@ -43,8 +43,8 @@ function generateEOR() {
 
 function confirm() {
     if (!eorKey) {
-        alert('Please generate an eoo first')
-        returns
+        alert('Please generate an eor first')
+        return
     }
     transactionId = getAllUrlParams(window.location.href).transaction_id
     userEor = document.getElementById("inputEorDom").value
@@ -54,7 +54,7 @@ function confirm() {
         method: 'post',
         url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/transaction/checkreciever',
         headers: {
-            'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+            'Authorization': jwtToken
         },
         data: {
             jwt_reciever: jwtToken,
@@ -70,7 +70,7 @@ function confirm() {
                         method: 'post',
                         url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/transaction/confirm',
                         headers: {
-                            'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+                            'Authorization': jwtToken
                         },
                         data: {
                             jwt: jwtToken,
@@ -113,7 +113,7 @@ function abort() {
         method: 'post',
         url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/transaction/abort',
         headers: {
-            'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+            'Authorization': jwtToken
         },
         data: {
             jwt: jwtToken,
@@ -132,9 +132,9 @@ let VerifyEOR = (jwtToken, transactionId, userEor) =>
     new Promise((resolve, reject) => {
         axios({
             method: 'post',
-            url: 'https://e0sjfe7hvb.execute-api.us-east-2.amazonaws.com/prod/VerifyEOR',
+            url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/VerifyEOR',
             headers: {
-                'x-api-key': 'aKMk5FuMXo8gA3etY97xh5SOhVSILTVb9UuHS5Wy'
+                'Authorization': jwtToken
             },
             data: {
                 jwt_reciever: jwtToken,
@@ -154,7 +154,7 @@ let confirmTransaction = (jwtToken, transactionId, eor_result) => {
             method: 'post',
             url: 'https://pcjzmr67vc.execute-api.eu-west-2.amazonaws.com/Dev/transaction/confirm',
             headers: {
-                'x-api-key': 'usObnKVt3F8ULNETbOMp26YAgm3bYOqh1Ahi6cfa'
+                'Authorization': jwtToken
             },
             data: {
                 jwt: jwtToken,

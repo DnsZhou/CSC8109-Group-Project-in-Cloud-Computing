@@ -103,18 +103,20 @@ function generateEOO() {
 }
 
 function startExchange() {
+    closeButton = $('.close')
     if (!locKey) {
         alert('Please upload a file first')
+        closeButton.trigger('click')
         return
     }
 
     if (!eooKey) {
         alert('Please generate an eoo first')
+        closeButton.trigger('click')
         return
     }
 
     userEoo = document.getElementById("inputEooDom").value
-    closeButton = $('.close')
     status = 'OnGoing'
     let transactionId = uuid()
     $('#docName').text(loc)

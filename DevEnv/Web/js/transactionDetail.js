@@ -46,8 +46,8 @@ function testAbortedTransaction() {
     hideAllComponent();
     $(".statusAborted").removeClass("hidden")
     if (testUser == "sender") {
-        $(".senderAborted").removeClass("hidden")
         $(".recieverAborted").addClass("hidden")
+        $(".senderAborted").removeClass("hidden")
     } else {
         $(".senderAborted").addClass("hidden")
         $(".recieverAborted").removeClass("hidden")

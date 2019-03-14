@@ -150,4 +150,5 @@ function showPage(transactionData) {
     $("#loadingPage").addClass("hidden");
     $("#mainContent").removeClass("hidden");
     $("#recieverName").text(transactionData.sender);
+    $("#summaryRemark").text(transactionData.remark)
 }

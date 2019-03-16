@@ -46,8 +46,8 @@ function testAbortedTransaction() {
     hideAllComponent();
     $(".statusAborted").removeClass("hidden")
     if (testUser == "sender") {
-        $(".senderAborted").removeClass("hidden")
         $(".recieverAborted").addClass("hidden")
+        $(".senderAborted").removeClass("hidden")
     } else {
         $(".senderAborted").addClass("hidden")
         $(".recieverAborted").removeClass("hidden")
@@ -150,6 +150,7 @@ function showPage(transactionData) {
     $("#loadingPage").addClass("hidden");
     $("#mainContent").removeClass("hidden");
     $("#recieverName").text(transactionData.sender);
+    $("#summaryRemark").text(transactionData.remark);
 }
 
 async function delayProcess() {

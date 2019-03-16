@@ -14,7 +14,9 @@ exports.handler = (event, context, callback) => {
     var currentTransactionId = JSON.parse(event.body).transactionId;
     var decodedJwt = jwt.decode(jwtToken);
     var currentUserSub = decodedJwt.sub;
-    var currentS3Param = { Bucket: 'filestores3', Key: 'userDocs/' + currentUserSub + '/' + currentTransactionId + '/' }
+    var currentS3Param = { Bucket: 'fes-filestorage', Key: 'userDocs/' + currentUserSub + '/' + currentTransactionId + '/' }
+    var currentS3ParamEOO = { Bucket: 'fes-filestorage', Key: 'userDocs/' + currentUserSub + '/' + currentTransactionId + '/' }
+    var currentS3ParamEOR = { Bucket: 'fes-filestorage', Key: 'userDocs/' + currentUserSub + '/' + currentTransactionId + '/' }
 
     var currentEor = null;
     var currentEoo = null;
@@ -25,8 +27,8 @@ exports.handler = (event, context, callback) => {
         FilterExpression: 'transactionId = :transactionId',
         ExpressionAttributeValues: { ":transactionId": currentTransactionId }
     }
-    getSignatureFromS3("eoo", currentUserSub, currentTransactionId, currentS3Param).then(function (eoo) {
-        getSignatureFromS3("eor", currentUserSub, currentTransactionId, currentS3Param).then(function (eor) {
+    getSignatureFromS3("eoo", currentUserSub, currentTransactionId, currentS3Param, currentS3ParamEOO, currentS3ParamEOR).then(function (eoo) {
+        getSignatureFromS3("eor", currentUserSub, currentTransactionId, currentS3Param, currentS3ParamEOO, currentS3ParamEOR).then(function (eor) {
             currentEoo = eoo;
             currentEor = eor;
             console.log("currentEoo: " + currentEoo)
@@ -138,21 +140,36 @@ exports.handler = (event, context, callback) => {
     });
 
 
-    function getSignatureFromS3(signatureFlag, sub, transactionId, s3Param) {
+    function getSignatureFromS3(signatureFlag, sub, transactionId, s3Param, s3ParamEOO, s3ParamEOR) {
         return new Promise(function (resolve, reject) {
             switch (signatureFlag) {
-                case "eoo": s3Param.Key += "signatureSender"; break;
-                case "eor": s3Param.Key += "signatureReciever"; break;
+                case "eoo": s3ParamEOO.Key += "signatureSender"; break;
+                case "eor": s3ParamEOR.Key += "signatureReciever"; break;
             }
-            s3.getObject(s3Param, function (err, dataSignature) {
-                if (err) {
-                    resolve(null);
-                }
-                else {
-                    console.log(dataSignature.Body);
-                    resolve(dataSignature.Body.toString('base64'));
-                }
-            })
+            if (signatureFlag === "eoo") {
+                s3.getObject(s3ParamEOO, function (err, dataSignature) {
+                    console.log(s3Param.Key)
+                    if (err) {
+                        resolve(null);
+                    }
+                    else {
+                        console.log(dataSignature.Body);
+                        resolve(dataSignature.Body.toString('base64'));
+                    }
+                })
+            }
+            if (signatureFlag === "eor") {
+                s3.getObject(s3ParamEOR, function (err, dataSignature) {
+                    console.log(s3Param.Key)
+                    if (err) {
+                        resolve(null);
+                    }
+                    else {
+                        console.log(dataSignature.Body);
+                        resolve(dataSignature.Body.toString('base64'));
+                    }
+                })
+            }
         });
     }
 };

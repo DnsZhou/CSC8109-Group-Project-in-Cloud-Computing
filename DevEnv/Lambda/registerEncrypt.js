@@ -4,6 +4,7 @@ const AWS = require('aws-sdk');
 //*/ get reference to S3 client 
 var s3 = new AWS.S3();
 const docClient = new aws.DynamoDB.DocumentClient({ region: 'eu-west-2' });
+var kms = new AWS.KMS({ apiVersion: '2014-11-01' });
 exports.handler = (event, context, callback) => {
     console.log(event);
 
@@ -20,45 +21,65 @@ function addUserInDb(sub, email, fullName, callback, event) {
     let params = {
         Item: {
             email: email,
-            fullName: fullName,
-            sub: sub
+            fullName: fullName
         },
         TableName: "FesUser"
     }
 
     docClient.put(params, (err, data) => {
         if (err) {
+            console.log(err)
             callback(err, event);
         }
         else {
-            addKeyPair(sub, email, event)
+            encrypt(sub, email, event)
             // callback(null, event);
             //Todo: call 
 
         }
     })
 
-    function addKeyPair(sub, email, event) {
+
+    function encrypt(sub, email, event) {
         let pair = keypair();
         let publicKey = pair.public
         let privateKey = pair.private
 
+        var params = {
+            KeyId: "arn:aws:kms:eu-west-2:663486236311:key/07b286ae-e58a-4be6-a5ff-65f4dc7f2805",
+            Plaintext: privateKey
+        };
+        kms.encrypt(params, function (err, data) {
+            if (err) {
+                console.log(err, err.stack); // an error occurred
+            }
+            else {
+                addKeyPair(sub, email, event, data, publicKey)
+            }
+        });
+    }
+
+
+    function addKeyPair(sub, email, event, data, publicKey) {
+
+
         let params = {
             "Body": publicKey,
             "ContentEncoding": 'utf8',
-            "Bucket": 'public-keys-cloudproject',
+            "Bucket": 'public-keys-london-cloud',
             "Key": email + '/publicKey.pem'
         };
 
         let paramsPrivate = {
-            "Body": privateKey,
+            "Body": data.CiphertextBlob,
             "ContentEncoding": 'utf8',
-            "Bucket": 'private-keys-cloud',
-            "Key": sub + '/privateKey.pem'
+            "Bucket": 'private-keys-london-cloud',
+            "Key": sub + '/privateKey'
         };
 
         s3.upload(params, function (err, data) {
             if (err) {
+                console.log(err)
                 callback(err, null);
             } else {
                 s3.upload(paramsPrivate, function (err, datas) {

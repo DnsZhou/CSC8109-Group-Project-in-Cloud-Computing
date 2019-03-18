@@ -12,12 +12,14 @@
 \usepackage{caption}
 \usepackage{array}
 \usepackage{url}
+\usepackage{subfigure}
 
 %\newcommand{\figref}[1]{Fig.\ref{#1}}
 %\newcommand{\eqnref}[1]{Eq.\ref{#1}}
 %\newcommand{\tref}[1]{Table.\ref{#1}}
 
-\title{CSC8109 Group Project Report} % Title
+\title{A Serverless Solution for Fair Exchange System \\
+	\large{Report of CSC8109 Group Project}} % Title
 \author{Christopher Clark \and Tong Zhou \and Weicheng Yang \and Junyan Wang}
 \institute{School of Computing, Newcastle University \\ Newcastle upon Tyne, NE4 5TG}
 
@@ -35,7 +37,14 @@
 %=== System Specification ====
 %=============================
 \section{System Specification} 
-According to the requirements described in CSC8109 Group Project Specification, this project is aimed to design and develop a fair exchange system on the AWS cloud. The general process is defined as the following picture:
+According to the requirements described in CSC8109 Group Project Specification, this project is aimed to design and develop a fair exchange system on the AWS cloud. The general process is defined as the following picture\cite{csc8109}:
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=10cm]{reportpics/1.jpg}  
+		\caption{Process}
+		\label{Process}
+	\end{figure}
 
 Before we start to discuss the design of the system, firstly we define some words that will generally be used within our system to represent the components in the fair exchange system:
 
@@ -76,6 +85,22 @@ During the exchange process, the system frequently needs to generate some signat
 
 \subsection{Authentication}
 To distinguish the sender and receiver from all users, we need to have some user authentication mechanisms that only allow identified user to use our system, and also we need to have the registration process before a new user start to use our system. The registration process should include the following procedures:
+
+\begin{itemize}
+	\item Get user information include:
+		\begin{itemize}
+			\item Email
+			\item Full name
+			\item Password (may be kept by third-party authentication service)
+		\end{itemize}
+	\item Verify the email by sending a verification code to the email address.
+	\item Generate a private key and a public key so that it can be used as the unique signa-ture of a particular user.
+\end{itemize}
+
+After the user has been created in our system, the user can log in to our systemwith the email address and password set by this user.
+
+\subsection{Exchange process}
+To provide service to the user with all kind of devices and platform, we are goingto design a browser-based system that allows users from all over the world to accessour system and communicate with TDS server.
 
 
 %=============================
@@ -140,6 +165,13 @@ In terms of actual encryption of our data, it was assumed we would be using secu
 %=============================
 \section{Design Decisions}
 This section is going to deal with the selection of specific selection of AWS Services. What they are, and why they were chosen. How they were applied to the algorithm is going to be discussed in section 5.
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=12cm]{reportpics/11.jpg}  
+		\caption{AWS Cloud}
+		\label{AWS Cloud}
+	\end{figure}
 
 This diagram gives a relatively good idea of the high-level interaction of our service. This will give a high-level description of what each service is for. Later on, in the section, more detail will be given on what each service is, what is it used for, and why it was chosen over alternatives. As mentioned within the previous section. The architecture we have chosen is that of a 100\% serverless architecture. Briefly what this meant was explained in section 2, however it will become clearer as it is explained in further sections, exactly why it is being utilized.
 
@@ -294,6 +326,26 @@ AWS Cognito provides out of the box basic authentication features such as MFA, e
 	\item Firstly, it allows us to uniquely identify our users through the use of a sub attribute. JWT's can be decoded into attributes which we see below. Within the implementation section we will see how the sub is used to uniquely and securely identify users when it comes to the TDS for storing documents and for storing keys.
 	\item Secondly, within the API gateway section, it was mentioned that API keys can be used to secure access to our AWS services. When using Cognito, it allows us to use our JWT's as our API keys. This means that it is only possible to access AWS services using API gateway if the user is logged in.
 \end{itemize}
+
+\begin{figure}[H]
+\centering
+\subfigure[JWT]{
+	\begin{minipage}[t]{0.46\linewidth}
+	\centering
+	\includegraphics[width=3.0in]{reportpics/12.jpg}
+	%\caption{fig1}
+	\end{minipage}
+}
+\subfigure[S3 Folder]{
+	\begin{minipage}[t]{0.46\linewidth}
+	\centering
+	\includegraphics[width=1.6in]{reportpics/13.jpg}
+	%\caption{fig1}
+	\end{minipage}
+}
+\centering
+\label{SRate}
+\end{figure}
 
 \subsubsection{Key Management}
 In terms of managing keys within our system. At a high level we are storing them in S3, uniquely identified by a sub. This process will be explained in more depth within Section 5.
@@ -490,11 +542,11 @@ Firstly, we set a rule to define all our back-end API in a standard way with thr
 \end{itemize}
 
 \subsection{Scrum Framework}
-During our project, we used the Scrum framework as a tool to collaborate all our members and improve the efficiency of delivery.
+During our project, we used the Scrum framework\cite{scrumdevelopment} as a tool to collaborate all our members and improve the efficiency of delivery.
 
 Conventionally, develop team take some typical approach, like waterfall model, to manage their entire life-cycle of development, which means the development is following one direction from the conceptional analysis, function design, coding, testing to finally deploying and maintenance. But with the development of the software engineering industry, now more and more band new technologies are taking the place of old-style platforms of programming. More and more development team are required to keep pace with new technologies and cope with the changing requirements to follow the trend of the market. They have to find a different way to conduct their entire software production life-cycle.
 
-Another reason for not using the waterfall model is because it takes time to understand the requirement, especially before you start to work on it. Only after you processed to the central part of the project can you get a general idea of what you are going to make, but with waterfall model you do not have a chance to reverse the initial design and choose another path to conduct your project until you finish most of the product?
+Another reason for not using the waterfall model is because it takes time to understand the requirement, especially before you start to work on it\cite{sutherland2004agile}. Only after you processed to the central part of the project can you get a general idea of what you are going to make, but with waterfall model you do not have a chance to reverse the initial design and choose another path to conduct your project until you finish most of the product?
 
 To solve these problems, we decided to take Scrum as our model during the entire developing life-cycle. Just like XP (Extreme Programming), Scrum is a kind of agile Methodology that especially suited for small develop team from3~9 members, and break the entire development work into small pieces within timeboxed iterations, which is called "Sprints." Since we only have about four weeks to develop our project, we divided the entire lifecycle into four individual Sprints. During every week we had one planning meeting on Monday, one retrospective meeting on Friday and daily stand-up meetings every day.
 
@@ -504,7 +556,14 @@ To solve these problems, we decided to take Scrum as our model during the entire
 	\item \textbf{Sprint Retrospective} means at the end of every sprint; the team will talk and eval-uate the progress we made during this sprint, and talk about any improvements we canmake in the next sprint.
 \end{itemize}
 
-We also used Trello as our list-making application to help us list the status of every task undergoing, and we can easily drag them to different columns represent different status within our sprints.
+We also used Trello\cite{trelloapp} as our list-making application to help us list the status of every task undergoing, and we can easily drag them to different columns represent different status within our sprints.
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=10cm]{reportpics/10.jpg}  
+		\caption{Trello Interface}
+		\label{trello interface}
+	\end{figure}
 
 \subsection{Task List}
 All the tasks completed during our project is listed in the table below: 
@@ -599,5 +658,8 @@ And Table \ref{table:Contribution} is a general conclusion of the contribution o
 \newpage
 \bibliographystyle{plain}
 \bibliography{reference}
+
+\newpage
+\section{Appendix}
 
 \end{document}
